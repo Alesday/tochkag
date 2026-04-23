@@ -1,0 +1,860 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		152C3CD42F87FB9800FE99E6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
+		152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		152C3DB22F8812CB00FE99E6 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; };
+		152C3DB32F8812CB00FE99E6 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
+		15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		152C3C7B2F86917F00FE99E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 152C3C652F86917C00FE99E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 152C3C6C2F86917C00FE99E6;
+			remoteInfo = tochkaG;
+		};
+		152C3C852F86917F00FE99E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 152C3C652F86917C00FE99E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 152C3C6C2F86917C00FE99E6;
+			remoteInfo = tochkaG;
+		};
+		152C3CDA2F87FB9800FE99E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 152C3C652F86917C00FE99E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 152C3CD22F87FB9800FE99E6;
+			remoteInfo = TochkaGTunnel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		152C3CC62F869CC100FE99E6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3DB42F8812CB00FE99E6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				152C3DB32F8812CB00FE99E6 /* Libbox.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		152C3C6D2F86917C00FE99E6 /* tochkaG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tochkaG.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		152C3CC72F869F1900FE99E6 /* Libbox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Libbox.xcframework; path = "../../sing-box/Libbox.xcframework"; sourceTree = "<group>"; };
+		152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		15772A3A2F98C29E00827BD0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		152C3CCB2F86A35200FE99E6 /* Exceptions for "tochkaG" folder in "tochkaG" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				Libbox.xcframework,
+			);
+			target = 152C3C6C2F86917C00FE99E6 /* tochkaG */;
+		};
+		152CFFFF2F87FB9800FE99E6 /* Exceptions for "TochkaGTunnel" folder in "TochkaGTunnel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				TochkaGTunnel.entitlements,
+				"TochkaGTunnel-Bridging-Header.h",
+			);
+			target = 152C3CD22F87FB9800FE99E6 /* TochkaGTunnel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		152C3C6F2F86917C00FE99E6 /* tochkaG */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				152C3CCB2F86A35200FE99E6 /* Exceptions for "tochkaG" folder in "tochkaG" target */,
+			);
+			path = tochkaG;
+			sourceTree = "<group>";
+		};
+		152C3C7D2F86917F00FE99E6 /* tochkaGTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tochkaGTests;
+			sourceTree = "<group>";
+		};
+		152C3C872F86917F00FE99E6 /* tochkaGUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tochkaGUITests;
+			sourceTree = "<group>";
+		};
+		152C3CBA2F869CC100FE99E6 /* TochkaGTunnel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				152CFFFF2F87FB9800FE99E6 /* Exceptions for "TochkaGTunnel" folder in "TochkaGTunnel" target */,
+			);
+			path = TochkaGTunnel;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		152C3C6A2F86917C00FE99E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C772F86917F00FE99E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C812F86917F00FE99E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3CD02F87FB9800FE99E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				152C3CD42F87FB9800FE99E6 /* NetworkExtension.framework in Frameworks */,
+				15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */,
+				152C3DB22F8812CB00FE99E6 /* Libbox.xcframework in Frameworks */,
+				15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		152C3C642F86917C00FE99E6 = {
+			isa = PBXGroup;
+			children = (
+				152C3C6F2F86917C00FE99E6 /* tochkaG */,
+				152C3C7D2F86917F00FE99E6 /* tochkaGTests */,
+				152C3C872F86917F00FE99E6 /* tochkaGUITests */,
+				152C3CBA2F869CC100FE99E6 /* TochkaGTunnel */,
+				152C3CB72F869CC000FE99E6 /* Frameworks */,
+				152C3C6E2F86917C00FE99E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		152C3C6E2F86917C00FE99E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				152C3C6D2F86917C00FE99E6 /* tochkaG.app */,
+				152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */,
+				152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */,
+				152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		152C3CB72F869CC000FE99E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15772A3C2F98C2A700827BD0 /* libresolv.tbd */,
+				15772A3A2F98C29E00827BD0 /* UIKit.framework */,
+				152C3CC72F869F1900FE99E6 /* Libbox.xcframework */,
+				152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		152C3C6C2F86917C00FE99E6 /* tochkaG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 152C3C8E2F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaG" */;
+			buildPhases = (
+				152C3C692F86917C00FE99E6 /* Sources */,
+				152C3C6A2F86917C00FE99E6 /* Frameworks */,
+				152C3C6B2F86917C00FE99E6 /* Resources */,
+				152C3CC62F869CC100FE99E6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				152C3CDB2F87FB9800FE99E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				152C3C6F2F86917C00FE99E6 /* tochkaG */,
+			);
+			name = tochkaG;
+			packageProductDependencies = (
+			);
+			productName = tochkaG;
+			productReference = 152C3C6D2F86917C00FE99E6 /* tochkaG.app */;
+			productType = "com.apple.product-type.application";
+		};
+		152C3C792F86917F00FE99E6 /* tochkaGTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 152C3C912F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaGTests" */;
+			buildPhases = (
+				152C3C762F86917F00FE99E6 /* Sources */,
+				152C3C772F86917F00FE99E6 /* Frameworks */,
+				152C3C782F86917F00FE99E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				152C3C7C2F86917F00FE99E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				152C3C7D2F86917F00FE99E6 /* tochkaGTests */,
+			);
+			name = tochkaGTests;
+			packageProductDependencies = (
+			);
+			productName = tochkaGTests;
+			productReference = 152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		152C3C832F86917F00FE99E6 /* tochkaGUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 152C3C942F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaGUITests" */;
+			buildPhases = (
+				152C3C802F86917F00FE99E6 /* Sources */,
+				152C3C812F86917F00FE99E6 /* Frameworks */,
+				152C3C822F86917F00FE99E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				152C3C862F86917F00FE99E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				152C3C872F86917F00FE99E6 /* tochkaGUITests */,
+			);
+			name = tochkaGUITests;
+			packageProductDependencies = (
+			);
+			productName = tochkaGUITests;
+			productReference = 152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		152C3CD22F87FB9800FE99E6 /* TochkaGTunnel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 152C3CDD2F87FB9800FE99E6 /* Build configuration list for PBXNativeTarget "TochkaGTunnel" */;
+			buildPhases = (
+				152C3CCF2F87FB9800FE99E6 /* Sources */,
+				152C3CD02F87FB9800FE99E6 /* Frameworks */,
+				152C3CD12F87FB9800FE99E6 /* Resources */,
+				152C3DB42F8812CB00FE99E6 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				152C3CBA2F869CC100FE99E6 /* TochkaGTunnel */,
+			);
+			name = TochkaGTunnel;
+			packageProductDependencies = (
+			);
+			productName = TochkaGTunnel;
+			productReference = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		152C3C652F86917C00FE99E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					152C3C6C2F86917C00FE99E6 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					152C3C792F86917F00FE99E6 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 152C3C6C2F86917C00FE99E6;
+					};
+					152C3C832F86917F00FE99E6 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 152C3C6C2F86917C00FE99E6;
+					};
+					152C3CD22F87FB9800FE99E6 = {
+						CreatedOnToolsVersion = 26.4;
+						LastSwiftMigration = 2640;
+					};
+				};
+			};
+			buildConfigurationList = 152C3C682F86917C00FE99E6 /* Build configuration list for PBXProject "tochkaG" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 152C3C642F86917C00FE99E6;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 152C3C6E2F86917C00FE99E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				152C3C6C2F86917C00FE99E6 /* tochkaG */,
+				152C3C792F86917F00FE99E6 /* tochkaGTests */,
+				152C3C832F86917F00FE99E6 /* tochkaGUITests */,
+				152C3CD22F87FB9800FE99E6 /* TochkaGTunnel */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		152C3C6B2F86917C00FE99E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C782F86917F00FE99E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C822F86917F00FE99E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3CD12F87FB9800FE99E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		152C3C692F86917C00FE99E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C762F86917F00FE99E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3C802F86917F00FE99E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		152C3CCF2F87FB9800FE99E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		152C3C7C2F86917F00FE99E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 152C3C6C2F86917C00FE99E6 /* tochkaG */;
+			targetProxy = 152C3C7B2F86917F00FE99E6 /* PBXContainerItemProxy */;
+		};
+		152C3C862F86917F00FE99E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 152C3C6C2F86917C00FE99E6 /* tochkaG */;
+			targetProxy = 152C3C852F86917F00FE99E6 /* PBXContainerItemProxy */;
+		};
+		152C3CDB2F87FB9800FE99E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 152C3CD22F87FB9800FE99E6 /* TochkaGTunnel */;
+			targetProxy = 152C3CDA2F87FB9800FE99E6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		152C3C8C2F86917F00FE99E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6CJ959CM4Q;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		152C3C8D2F86917F00FE99E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6CJ959CM4Q;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		152C3C8F2F86917F00FE99E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tochkaG/tochkaG.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tochkaG/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		152C3C902F86917F00FE99E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tochkaG/tochkaG.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tochkaG/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		152C3C922F86917F00FE99E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.appTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tochkaG.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tochkaG";
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		152C3C932F86917F00FE99E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.appTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tochkaG.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tochkaG";
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		152C3C952F86917F00FE99E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.appUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = tochkaG;
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		152C3C962F86917F00FE99E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.appUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = tochkaG;
+				XROS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		152C3CDE2F87FB9800FE99E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TochkaGTunnel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TochkaGTunnel;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		152C3CDF2F87FB9800FE99E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TochkaGTunnel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TochkaGTunnel;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		152C3C682F86917C00FE99E6 /* Build configuration list for PBXProject "tochkaG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				152C3C8C2F86917F00FE99E6 /* Debug */,
+				152C3C8D2F86917F00FE99E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		152C3C8E2F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				152C3C8F2F86917F00FE99E6 /* Debug */,
+				152C3C902F86917F00FE99E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		152C3C912F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaGTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				152C3C922F86917F00FE99E6 /* Debug */,
+				152C3C932F86917F00FE99E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		152C3C942F86917F00FE99E6 /* Build configuration list for PBXNativeTarget "tochkaGUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				152C3C952F86917F00FE99E6 /* Debug */,
+				152C3C962F86917F00FE99E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		152C3CDD2F87FB9800FE99E6 /* Build configuration list for PBXNativeTarget "TochkaGTunnel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				152C3CDE2F87FB9800FE99E6 /* Debug */,
+				152C3CDF2F87FB9800FE99E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 152C3C652F86917C00FE99E6 /* Project object */;
+}

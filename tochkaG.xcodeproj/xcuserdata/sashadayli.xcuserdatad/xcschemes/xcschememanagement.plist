@@ -4,10 +4,38 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>TochkaGTunnel.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>TochkaGTunnelWG.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>tochkaG.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>152C3C6C2F86917C00FE99E6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>152C3C792F86917F00FE99E6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>152C3C832F86917F00FE99E6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

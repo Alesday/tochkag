@@ -1,24 +1,18 @@
+// ContentView.swift
+// TochkaG
 //
-//  ContentView.swift
-//  tochkaG
-//
-//  Created by Sasha DAYLI on 08.04.2026.
-//
+// Главный экран приложения
 
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @StateObject private var store = ConfigStore()
 
-#Preview {
-    ContentView()
+    var body: some View {
+        NavigationView {
+            ConfigListView()
+                .environmentObject(store)
+        }
+        .navigationViewStyle(.stack)
+    }
 }

@@ -1,0 +1,24 @@
+# Build artifacts
+build/
+DerivedData/
+*.xcbuilddata
+*.pcm
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.moved-aside
+*.pbxproj.backup*
+
+# SPM checkouts (submodules)
+.spm-checkouts/
+
+# OS
+.DS_Store
+
+# Certificates & keys
+*.p12
+*.mobileprovision
+*.cer
+*.key

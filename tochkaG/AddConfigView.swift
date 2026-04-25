@@ -210,6 +210,7 @@ struct AddVlessView: View {
     @State private var urlError   = ""
     @State private var isLoading  = false
     @State private var subConfigs: [VlessConfig] = []
+    @State private var routing     = ""
 
     let networks   = ["ws", "tcp", "grpc", "httpupgrade"]
     let securities = ["tls", "none", "reality"]
@@ -233,6 +234,7 @@ struct AddVlessView: View {
                         Text(urlError).foregroundColor(.red).font(.caption)
                     }
                 }
+
                 Section {
                     Button("Добавить") { parseAndSave() }
                         .disabled(vlessURL.isEmpty)
@@ -300,6 +302,7 @@ struct AddVlessView: View {
                     TextField("SNI", text: $sni).textInputAutocapitalization(.never)
                     TextField("Path", text: $path).textInputAutocapitalization(.never)
                 }
+
                 if !urlError.isEmpty {
                     Section { Text(urlError).foregroundColor(.red).font(.caption) }
                 }
@@ -416,7 +419,8 @@ struct AddVlessView: View {
             publicKey:   p["pbk"] ?? "",
             shortId:     p["sid"] ?? "",
             flow:        p["flow"] ?? "",
-            fingerprint: p["fp"] ?? "chrome"
+            fingerprint: p["fp"] ?? "chrome",
+            routing: routing
         )))
         dismiss()
     }
@@ -427,7 +431,8 @@ struct AddVlessView: View {
         store.add(.vless(VlessConfig(
             name: sni.isEmpty ? address : sni,
             uuid: uuid, address: address, port: port,
-            path: path, network: network, security: security, sni: sni
+            path: path, network: network, security: security, sni: sni,
+            routing: routing
         )))
         dismiss()
     }

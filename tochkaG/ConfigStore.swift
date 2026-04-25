@@ -290,6 +290,7 @@ class ConfigStore: ObservableObject {
                 "security": vl.security, "sni": vl.sni,
                 "pbk": vl.publicKey, "sid": vl.shortId,
                 "flow": vl.flow, "fp": vl.fingerprint,
+                "routing": vl.routing,
             ]
         }
 

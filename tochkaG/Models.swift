@@ -37,6 +37,7 @@ struct VlessConfig: Codable, Identifiable {
     var shortId:     String = ""   // Reality sid
     var flow:        String = ""   // xtls-rprx-vision (optional)
     var fingerprint: String = "chrome" // utls fp
+    var routing:  String = ""   // custom Xray routing JSON (optional)
     var isActive: Bool = false
 }
 

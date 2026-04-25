@@ -52,13 +52,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let pbk  = cfg["pbk"]  as? String ?? ""
         let sid  = cfg["sid"]  as? String ?? ""
         let flow = cfg["flow"] as? String ?? ""
-        let fp   = cfg["fp"]   as? String ?? "chrome"
+        let fp      = cfg["fp"]      as? String ?? "chrome"
+        let routing = cfg["routing"] as? String ?? ""
 
         flog("CONFIG: \(address):\(port) net=\(network) sec=\(security)")
 
         let xrayJSON = makeXrayConfig(uuid: uuid, address: address, port: port,
                                        network: network, security: security, sni: sni,
-                                       path: path, pbk: pbk, sid: sid, flow: flow, fp: fp)
+                                       path: path, pbk: pbk, sid: sid, flow: flow, fp: fp, routing: routing)
 
         completionHandler(nil)
         flog("COMPLETION HANDLER OK")
@@ -176,7 +177,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private func makeXrayConfig(uuid: String, address: String, port: String,
                                  network: String, security: String, sni: String,
                                  path: String, pbk: String, sid: String,
-                                 flow: String, fp: String) -> String {
+                                 flow: String, fp: String, routing: String = "") -> String {
         let portInt = Int(port) ?? 443
         let fpSafe = fp.isEmpty ? "chrome" : fp
         let flowPart = flow.isEmpty ? "" : ",\"flow\":\"\(flow)\""
@@ -208,7 +209,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // Иначе dokodemo-door (прокси режим)
         let inbound = "{\"tag\":\"tun-in\",\"protocol\":\"tun\",\"settings\":{\"name\":\"utun5\",\"mtu\":1500,\"userLevel\":0}}"
 
-        return "{\"log\":{\"loglevel\":\"warning\"},\"dns\":{\"servers\":[\"1.1.1.1\",\"8.8.8.8\"]},\"inbounds\":[\(inbound)],\"outbounds\":[{\"tag\":\"vless-out\",\"protocol\":\"vless\",\"settings\":{\"vnext\":[{\"address\":\"\(address)\",\"port\":\(portInt),\"users\":[{\"id\":\"\(uuid)\",\"encryption\":\"none\"\(flowPart)}]}]},\(streamStr)},{\"tag\":\"direct\",\"protocol\":\"freedom\"}],\"routing\":{\"domainStrategy\":\"AsIs\",\"rules\":[]}}"
+        let routingRules = routing.isEmpty ? "[]" : routing
+        return "{\"log\":{\"loglevel\":\"warning\"},\"dns\":{\"servers\":[\"1.1.1.1\",\"8.8.8.8\"]},\"inbounds\":[\(inbound)],\"outbounds\":[{\"tag\":\"vless-out\",\"protocol\":\"vless\",\"settings\":{\"vnext\":[{\"address\":\"\(address)\",\"port\":\(portInt),\"users\":[{\"id\":\"\(uuid)\",\"encryption\":\"none\"\(flowPart)}]}]},\(streamStr)},{\"tag\":\"direct\",\"protocol\":\"freedom\"}],\"routing\":{\"domainStrategy\":\"AsIs\",\"rules\":\(routingRules)}}"
     }
 }
 

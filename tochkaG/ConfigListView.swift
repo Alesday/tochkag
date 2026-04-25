@@ -10,7 +10,6 @@ struct ConfigListView: View {
     @State private var showAdd        = false
     @State private var showProxySheet = false
     @State private var showLogs       = false
-    @State private var tunnelLogs: [String] = []
 
     var wgConfigs:    [VPNConfig] { store.configs.filter { $0.protocolType == .wireguard } }
     var vlessConfigs: [VPNConfig] { store.configs.filter { $0.protocolType == .vless } }
@@ -108,41 +107,8 @@ struct ConfigListView: View {
 
         .sheet(isPresented: $showProxySheet) { ProxySheetView() }
         .sheet(isPresented: $showAdd) { AddConfigView().environmentObject(store) }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Логи") {
-                    if let ud = UserDefaults(suiteName: "group.com.tochkag.vpn") {
-                        tunnelLogs = ud.stringArray(forKey: "tunnel_logs") ?? ["Нет логов"]
-                    }
-                    showLogs = true
-                }.font(.caption)
-            }
-        }
-        .sheet(isPresented: $showLogs) {
-            NavigationView {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 4) {
-                        ForEach(tunnelLogs.reversed(), id: \.self) { line in
-                            Text(line)
-                                .font(.system(size: 11, design: .monospaced))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }.padding()
-                }
-                .navigationTitle("Tunnel Logs")
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Закрыть") { showLogs = false }
-                    }
-                    ToolbarItem(placement: .destructiveAction) {
-                        Button("Очистить") {
-                            UserDefaults(suiteName: "group.com.tochkag.vpn")?.removeObject(forKey: "tunnel_logs")
-                            tunnelLogs = []
-                        }
-                    }
-                }
-            }
-        }
+        
+        
         .onReceive(store.$configWasAdded) { added in
             if added {
                 showAdd = false

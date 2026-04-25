@@ -1,0 +1,2 @@
+HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/TochkaGTunnel/LibXrayStatic/Headers
+OTHER_LDFLAGS = $(inherited) -L$(SRCROOT)/TochkaGTunnel/LibXrayStatic -lXray -framework Foundation -framework Security -framework CFNetwork -framework UIKit -lresolv -lc++

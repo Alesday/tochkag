@@ -19,7 +19,8 @@
 		EEEE000000000000000000A6 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		EEEE000000000000000000A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-/* End PBXBuildFile section */
+		DD11223344556677889900DD /* SafeKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC11223344556677889900CC /* SafeKVC.m */; };
+		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		152C3C7B2F86917F00FE99E6 /* PBXContainerItemProxy */ = {
@@ -92,7 +93,8 @@
 		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		15772A3A2F98C29E00827BD0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
-/* End PBXFileReference section */
+		CC11223344556677889900CC /* SafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TochkaGTunnel/SafeKVC.m; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		152C3CCB2F86A35200FE99E6 /* Exceptions for "tochkaG" folder in "tochkaG" target */ = {
@@ -478,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD11223344556677889900DD /* SafeKVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

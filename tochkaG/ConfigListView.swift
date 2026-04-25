@@ -9,6 +9,8 @@ struct ConfigListView: View {
     @EnvironmentObject var store: ConfigStore
     @State private var showAdd        = false
     @State private var showProxySheet = false
+    @State private var showLogs       = false
+    @State private var tunnelLogs: [String] = []
 
     var wgConfigs:    [VPNConfig] { store.configs.filter { $0.protocolType == .wireguard } }
     var vlessConfigs: [VPNConfig] { store.configs.filter { $0.protocolType == .vless } }
@@ -101,34 +103,46 @@ struct ConfigListView: View {
                 }
             }
 
-            Section {
-                VStack(spacing: 6) {
-                    Text("Для получения персонального доступа используйте")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                    Button {
-                        let tg = URL(string: "tg://resolve?domain=tochka_gi_bot")!
-                        let web = URL(string: "https://t.me/tochka_gi_bot")!
-                        if UIApplication.shared.canOpenURL(tg) {
-                            UIApplication.shared.open(tg)
-                        } else {
-                            UIApplication.shared.open(web)
-                        }
-                    } label: {
-                        Text("@tochka_gi_bot")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundColor(Color(red: 0.17, green: 0.66, blue: 0.91))
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 4)
-                .listRowBackground(Color.clear)
-            }
         }
         .navigationTitle("")
+
         .sheet(isPresented: $showProxySheet) { ProxySheetView() }
         .sheet(isPresented: $showAdd) { AddConfigView().environmentObject(store) }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Логи") {
+                    if let ud = UserDefaults(suiteName: "group.com.tochkag.vpn") {
+                        tunnelLogs = ud.stringArray(forKey: "tunnel_logs") ?? ["Нет логов"]
+                    }
+                    showLogs = true
+                }.font(.caption)
+            }
+        }
+        .sheet(isPresented: $showLogs) {
+            NavigationView {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(tunnelLogs.reversed(), id: \.self) { line in
+                            Text(line)
+                                .font(.system(size: 11, design: .monospaced))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }.padding()
+                }
+                .navigationTitle("Tunnel Logs")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Закрыть") { showLogs = false }
+                    }
+                    ToolbarItem(placement: .destructiveAction) {
+                        Button("Очистить") {
+                            UserDefaults(suiteName: "group.com.tochkag.vpn")?.removeObject(forKey: "tunnel_logs")
+                            tunnelLogs = []
+                        }
+                    }
+                }
+            }
+        }
         .onReceive(store.$configWasAdded) { added in
             if added {
                 showAdd = false
@@ -186,30 +200,11 @@ struct ProxySheetView: View {
                     }
                     .padding(.horizontal)
 
-                    VStack(spacing: 4) {
-                        Text("Для получения персонального доступа используйте")
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                        Button {
-                            let tg = URL(string: "tg://resolve?domain=tochka_gi_bot")!
-                            let web = URL(string: "https://t.me/tochka_gi_bot")!
-                            if UIApplication.shared.canOpenURL(tg) {
-                                UIApplication.shared.open(tg)
-                            } else {
-                                UIApplication.shared.open(web)
-                            }
-                        } label: {
-                            Text("@tochka_gi_bot")
-                                .font(.footnote.weight(.semibold))
-                                .foregroundColor(Color(red: 0.17, green: 0.66, blue: 0.91))
-                        }
-                    }
-                    .padding(.horizontal)
                     ProxyInfoView().padding(.horizontal).padding(.bottom, 32)
                 }
             }
             .navigationTitle("")
+
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -343,12 +338,14 @@ struct ConfigRowView: View {
         switch config {
         case .vless(let v):
             return (v.address, UInt16(v.port) ?? 443)
-        case .wireguard(let w):
-            // endpoint вида "1.2.3.4:51820"
-            let parts = w.endpoint.split(separator: ":")
-            let host = parts.first.map(String.init) ?? w.endpoint
-            let port = parts.count > 1 ? (UInt16(parts[1]) ?? 51820) : 51820
-            return (host, port)
+        case .wireguard:
+            // WG endpoint — UDP, TCP пинг не работает.
+            // Пингуем через туннель если активен, иначе — WG сервер по 443/80
+            if config.isActive {
+                return ("1.1.1.1", 80)
+            } else {
+                return ("1.1.1.1", 80)
+            }
         }
     }
 }

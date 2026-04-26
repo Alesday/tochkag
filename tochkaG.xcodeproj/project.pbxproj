@@ -11,6 +11,7 @@
 		152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
+		DD11223344556677889900DD /* TochkaGTunnel/SafeKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC11223344556677889900CC /* TochkaGTunnel/SafeKVC.m */; };
 		EEEE000000000000000000A3 /* TochkaGTunnelWG.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
 		EEEE000000000000000000A7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
@@ -94,6 +95,7 @@
 		152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		15772A3A2F98C29E00827BD0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
+		CC11223344556677889900CC /* TochkaGTunnel/SafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TochkaGTunnel/SafeKVC.m; sourceTree = "<group>"; };
 		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -213,7 +215,7 @@
 				EEEE000000000000000000C1 /* TochkaGTunnelWG */,
 				152C3CB72F869CC000FE99E6 /* Frameworks */,
 				152C3C6E2F86917C00FE99E6 /* Products */,
-				1541CE632F9E558A00880A7D /* Recovered References */,
+				1541D03B2F9E5AD800880A7D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,9 +241,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1541CE632F9E558A00880A7D /* Recovered References */ = {
+		1541D03B2F9E5AD800880A7D /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				CC11223344556677889900CC /* TochkaGTunnel/SafeKVC.m */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD11223344556677889900DD /* TochkaGTunnel/SafeKVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,14 +849,17 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -884,13 +891,16 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -923,14 +933,17 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -962,13 +975,16 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

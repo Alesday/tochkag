@@ -9,18 +9,13 @@
 /* Begin PBXBuildFile section */
 		152C3CD42F87FB9800FE99E6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
 		152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		152C3DB22F8812CB00FE99E6 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; };
-		152C3DB32F8812CB00FE99E6 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		EEEE000000000000000000A3 /* TochkaGTunnelWG.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
-		EEEE000000000000000000A5 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; };
-		EEEE000000000000000000A6 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CC72F869F1900FE99E6 /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		EEEE000000000000000000A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		DD11223344556677889900DD /* SafeKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC11223344556677889900CC /* SafeKVC.m */; };
-		/* End PBXBuildFile section */
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		152C3C7B2F86917F00FE99E6 /* PBXContainerItemProxy */ = {
@@ -65,7 +60,16 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				152C3DB32F8812CB00FE99E6 /* Libbox.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE4B193110217C21678FF6A6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,7 +80,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EEEE000000000000000000A6 /* Libbox.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,20 +91,17 @@
 		152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		152C3CC72F869F1900FE99E6 /* Libbox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Libbox.xcframework; path = "../../sing-box/Libbox.xcframework"; sourceTree = "<group>"; };
 		152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		15772A3A2F98C29E00827BD0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
-		CC11223344556677889900CC /* SafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TochkaGTunnel/SafeKVC.m; sourceTree = "<group>"; };
-		/* End PBXFileReference section */
+		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		152C3CCB2F86A35200FE99E6 /* Exceptions for "tochkaG" folder in "tochkaG" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Libbox.xcframework,
 			);
 			target = 152C3C6C2F86917C00FE99E6 /* tochkaG */;
 		};
@@ -109,8 +109,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				TochkaGTunnel.entitlements,
-				"TochkaGTunnel-Bridging-Header.h",
 			);
 			target = 152C3CD22F87FB9800FE99E6 /* TochkaGTunnel */;
 		};
@@ -118,8 +116,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				TochkaGTunnelWG.entitlements,
-				"TochkaGTunnelWG-Bridging-Header.h",
 			);
 			target = EEEE000000000000000000A1 /* TochkaGTunnelWG */;
 		};
@@ -190,7 +186,6 @@
 			files = (
 				152C3CD42F87FB9800FE99E6 /* NetworkExtension.framework in Frameworks */,
 				15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */,
-				152C3DB22F8812CB00FE99E6 /* Libbox.xcframework in Frameworks */,
 				15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +194,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEEE000000000000000000A5 /* Libbox.xcframework in Frameworks */,
 				EEEE000000000000000000A4 /* NetworkExtension.framework in Frameworks */,
 				EEEE000000000000000000A7 /* libresolv.tbd in Frameworks */,
 				EEEE000000000000000000A8 /* UIKit.framework in Frameworks */,
@@ -219,6 +213,7 @@
 				EEEE000000000000000000C1 /* TochkaGTunnelWG */,
 				152C3CB72F869CC000FE99E6 /* Frameworks */,
 				152C3C6E2F86917C00FE99E6 /* Products */,
+				1541CE632F9E558A00880A7D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,10 +234,16 @@
 			children = (
 				15772A3C2F98C2A700827BD0 /* libresolv.tbd */,
 				15772A3A2F98C29E00827BD0 /* UIKit.framework */,
-				152C3CC72F869F1900FE99E6 /* Libbox.xcframework */,
 				152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1541CE632F9E558A00880A7D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +257,7 @@
 				152C3C6A2F86917C00FE99E6 /* Frameworks */,
 				152C3C6B2F86917C00FE99E6 /* Resources */,
 				152C3CC62F869CC100FE99E6 /* Embed Foundation Extensions */,
+				DE4B193110217C21678FF6A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -266,8 +268,6 @@
 				152C3C6F2F86917C00FE99E6 /* tochkaG */,
 			);
 			name = tochkaG;
-			packageProductDependencies = (
-			);
 			productName = tochkaG;
 			productReference = 152C3C6D2F86917C00FE99E6 /* tochkaG.app */;
 			productType = "com.apple.product-type.application";
@@ -289,8 +289,6 @@
 				152C3C7D2F86917F00FE99E6 /* tochkaGTests */,
 			);
 			name = tochkaGTests;
-			packageProductDependencies = (
-			);
 			productName = tochkaGTests;
 			productReference = 152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -312,8 +310,6 @@
 				152C3C872F86917F00FE99E6 /* tochkaGUITests */,
 			);
 			name = tochkaGUITests;
-			packageProductDependencies = (
-			);
 			productName = tochkaGUITests;
 			productReference = 152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -335,8 +331,6 @@
 				152C3CBA2F869CC100FE99E6 /* TochkaGTunnel */,
 			);
 			name = TochkaGTunnel;
-			packageProductDependencies = (
-			);
 			productName = TochkaGTunnel;
 			productReference = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -358,8 +352,6 @@
 				EEEE000000000000000000C1 /* TochkaGTunnelWG */,
 			);
 			name = TochkaGTunnelWG;
-			packageProductDependencies = (
-			);
 			productName = TochkaGTunnelWG;
 			productReference = EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -400,8 +392,6 @@
 			);
 			mainGroup = 152C3C642F86917C00FE99E6;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 152C3C6E2F86917C00FE99E6 /* Products */;
 			projectDirPath = "";
@@ -480,7 +470,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD11223344556677889900DD /* SafeKVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,19 +835,24 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TochkaGTunnel/LibXrayStatic",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel;
-				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
 			};
 			name = Debug;
 		};
@@ -880,18 +874,23 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TochkaGTunnel/LibXrayStatic",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel;
-				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -914,19 +913,24 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TochkaGTunnelWG/WireGuardKitGo",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel.wg;
-				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
 			};
 			name = Debug;
 		};
@@ -948,18 +952,23 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TochkaGTunnelWG/WireGuardKitGo",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnel.wg;
-				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

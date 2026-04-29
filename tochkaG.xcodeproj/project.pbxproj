@@ -97,6 +97,7 @@
 		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
 		CC11223344556677889900CC /* SafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TochkaGTunnel/SafeKVC.m; sourceTree = "<group>"; };
 		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000000000000000000BB01 /* TochkaGTunnel.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = TochkaGTunnel.xcconfig; path = TochkaGTunnel/TochkaGTunnel.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -827,6 +828,7 @@
 		};
 		152C3CDE2F87FB9800FE99E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB000000000000000000BB01 /* TochkaGTunnel.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;
@@ -869,6 +871,7 @@
 		};
 		152C3CDF2F87FB9800FE99E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB000000000000000000BB01 /* TochkaGTunnel.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;

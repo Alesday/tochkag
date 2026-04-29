@@ -1,4 +1,4 @@
 HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/TochkaGTunnel/LibXrayStatic/Headers
-OTHER_LDFLAGS = $(inherited) -L$(SRCROOT)/TochkaGTunnel/LibXrayStatic -lXray -framework Foundation -framework Security -framework CFNetwork -framework UIKit -lresolv -lc++
+OTHER_LDFLAGS = $(inherited) -force_load $(SRCROOT)/TochkaGTunnel/LibXrayStatic/libXray.a -ObjC -framework Foundation -framework Security -framework CFNetwork -framework UIKit -lresolv -lc++
 
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64

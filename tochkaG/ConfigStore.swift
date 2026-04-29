@@ -109,7 +109,7 @@ class ConfigStore: ObservableObject {
             let targetBundle: String = {
                 switch config {
                 case .vless:     return "com.tochkag.app.tunnel"
-                case .wireguard: return "com.tochkag.app.tunnel.wg"
+                case .wireguard: return "com.tochkag.app.tunnelwg"
                 }
             }()
 
@@ -268,7 +268,7 @@ class ConfigStore: ObservableObject {
         let proto = NETunnelProviderProtocol()
         switch config {
         case .vless:     proto.providerBundleIdentifier = "com.tochkag.app.tunnel"
-        case .wireguard: proto.providerBundleIdentifier = "com.tochkag.app.tunnel.wg"
+        case .wireguard: proto.providerBundleIdentifier = "com.tochkag.app.tunnelwg"
         }
 
         switch config {

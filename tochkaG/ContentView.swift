@@ -13,6 +13,8 @@ struct ContentView: View {
             ConfigListView()
                 .environmentObject(store)
         }
+        #if os(iOS)
         .navigationViewStyle(.stack)
+        #endif
     }
 }

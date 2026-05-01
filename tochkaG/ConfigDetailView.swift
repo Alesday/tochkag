@@ -68,7 +68,9 @@ struct ConfigDetailView: View {
             }
         }
         .navigationTitle(config.name)
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
     }
 
     func row(_ label: String, _ value: String) -> some View {

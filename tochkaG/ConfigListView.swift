@@ -7,9 +7,8 @@ import SafariServices
 
 struct ConfigListView: View {
     @EnvironmentObject var store: ConfigStore
-    @State private var showAdd        = false
-    @State private var showProxySheet = false
-    @State private var showLogs       = false
+    @State private var showAdd  = false
+    @State private var showLogs = false
 
     var wgConfigs:    [VPNConfig] { store.configs.filter { $0.protocolType == .wireguard } }
     var vlessConfigs: [VPNConfig] { store.configs.filter { $0.protocolType == .vless } }
@@ -80,32 +79,9 @@ struct ConfigListView: View {
                     .listRowBackground(Color.clear)
             }
 
-            Section {
-                Button { showProxySheet = true } label: {
-                    HStack {
-                        Image(systemName: "paperplane.fill")
-                            .foregroundColor(.white)
-                            .frame(width: 28, height: 28)
-                            .background(Color(red: 0.17, green: 0.66, blue: 0.91))
-                            .cornerRadius(6)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Временный прокси для TG")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                            Text("Открыть в Telegram")
-                                .font(.caption).foregroundColor(.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary).font(.caption)
-                    }
-                }
-            }
-
         }
         .navigationTitle("")
 
-        .sheet(isPresented: $showProxySheet) { ProxySheetView() }
         .sheet(isPresented: $showAdd) { AddConfigView().environmentObject(store) }
         
         
@@ -131,91 +107,19 @@ struct SupportFooterView: View {
                 }
             }
             .font(.caption).foregroundColor(.blue)
-            Text("Если не работает TG — воспользуйтесь временным прокси по кнопке ниже.")
-                .font(.caption).foregroundColor(.secondary).multilineTextAlignment(.center)
         }
-    }
-}
-
-// ── Proxy Sheet ───────────────────────────────────────────
-
-struct ProxySheetView: View {
-    @Environment(\.dismiss) var dismiss
-    @State private var showSafari = false
-
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 24) {
-                    Image(systemName: "paperplane.fill")
-                        .font(.system(size: 56))
-                        .foregroundColor(Color(red: 0.17, green: 0.66, blue: 0.91))
-                        .padding(.top, 32)
-                    Text("Временный прокси\nдля Telegram")
-                        .font(.title2).fontWeight(.bold).multilineTextAlignment(.center)
-                    Button { showSafari = true } label: {
-                        HStack {
-                            Spacer()
-                            Text("Подключиться")
-                                .fontWeight(.semibold).foregroundColor(.white)
-                            Spacer()
-                        }
-                        .padding()
-                        .background(Color(red: 0.17, green: 0.66, blue: 0.91))
-                        .cornerRadius(14)
-                    }
-                    .padding(.horizontal)
-
-                    ProxyInfoView().padding(.horizontal).padding(.bottom, 32)
-                }
-            }
-            .navigationTitle("")
-
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Закрыть") { dismiss() }
-                }
-            }
-            .sheet(isPresented: $showSafari) {
-                SafariView(url: URL(string: "https://tochkag.online")!).ignoresSafeArea()
-            }
-        }
-    }
-}
-
-struct ProxyInfoView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(alignment: .top, spacing: 12) {
-                Image(systemName: "info.circle.fill").foregroundColor(.orange).font(.title3)
-                Text("Помните, что это временный прокси — лишь способ связаться с поддержкой. Если вам нужен личный прокси, доступ можно получить с большой скидкой в боте.")
-                    .font(.subheadline).foregroundColor(.secondary)
-            }
-            Divider()
-            HStack(alignment: .top, spacing: 12) {
-                Image(systemName: "trash.circle.fill").foregroundColor(.red).font(.title3)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Как удалить прокси после использования:")
-                        .font(.subheadline).fontWeight(.medium)
-                    Text("Зайдите в Настройки Telegram → «Данные и память» → «Прокси» (последняя строчка) → удалите соединение.")
-                        .font(.subheadline).foregroundColor(.secondary)
-                }
-            }
-        }
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(14)
     }
 }
 
 // ── Safari View ───────────────────────────────────────────
 
+#if os(iOS)
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
     func makeUIViewController(context: Context) -> SFSafariViewController { SFSafariViewController(url: url) }
     func updateUIViewController(_ vc: SFSafariViewController, context: Context) {}
 }
+#endif
 
 // ── Config Row ────────────────────────────────────────────
 
@@ -305,8 +209,8 @@ struct ConfigRowView: View {
         case .vless(let v):
             return (v.address, UInt16(v.port) ?? 443)
         case .wireguard:
-            // WG endpoint — UDP, TCP пинг не работает.
-            // Пингуем через туннель если активен, иначе — WG сервер по 443/80
+            // WG endpoint — UDP, TCP-проба не работает.
+            // Пингуем через туннель если активен, иначе — публичный анкер по 80 порту.
             if config.isActive {
                 return ("1.1.1.1", 80)
             } else {

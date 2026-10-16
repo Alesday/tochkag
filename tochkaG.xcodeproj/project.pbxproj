@@ -7,22 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DBA96724A464403E15B9F09 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E399EB3DDFCF5658A8D8B63 /* PacketTunnelProvider.swift */; };
+		0DDB4EC0027F36ACC1D29BF5 /* Array+ConcurrentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACBF087A9B1CAD1F5ADD5FA /* Array+ConcurrentMap.swift */; };
 		152C3CD42F87FB9800FE99E6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
 		152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 152C3CD32F87FB9800FE99E6 /* TochkaGTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		157527342FA34E08006083F7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
-		1575273C2FA34E08006083F7 /* Tunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 157527332FA34E08006083F7 /* Tunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		15772A3E2F98C30900827BD0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		15772A3F2F98C31300827BD0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		15F090652FA3C3B3008AE5B8 /* TochkaGTunnelWG.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		288F8E3EE2A9992E62EDEF34 /* x25519.c in Sources */ = {isa = PBXBuildFile; fileRef = 972BDABD5469087B97D1ABFE /* x25519.c */; };
+		34EBFAEFC29AF01893607470 /* DNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4041CB954C9307AC305781B5 /* DNSResolver.swift */; };
+		4190ACA50E73B5FBE328151C /* TunnelMacWG.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A3EDACD79567618991432C8F /* TunnelMacWG.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		658CBC6DCD583957D6432FA2 /* PeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CF304051BC6227A60A3A33 /* PeerConfiguration.swift */; };
+		6A5B68D487774FA10A32F97E /* InterfaceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6F0F95A84F2C250EBFAD06 /* InterfaceConfiguration.swift */; };
+		6B2AB8AE0AB7D63CBECDA978 /* DNSServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDC655260DB31E66BA553B /* DNSServer.swift */; };
+		70507880B6CFC2268CA15B41 /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = 46683727DBC69E65317791D3 /* key.c */; };
+		C866F23A50B360E473FB9187 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ED718759A5FB262B74089C /* Endpoint.swift */; };
+		CA59897667F66F40FB33F90F /* String+ArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248AABC801C689733674AA38 /* String+ArrayConversion.swift */; };
+		CEF91506ABA6A838A851A95C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4174486FF61535F6BA94FEAE /* Cocoa.framework */; };
+		D65F6BF01C67A2276D85FDBB /* TunnelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB260829BED14327454F252 /* TunnelConfiguration.swift */; };
+		DA5A8E55E4AF2754C2C2B022 /* PacketTunnelSettingsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37D080A2A214D10C8E59A41 /* PacketTunnelSettingsGenerator.swift */; };
 		DD11223344556677889900DD /* TochkaGTunnel/SafeKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC11223344556677889900CC /* TochkaGTunnel/SafeKVC.m */; };
+		DE4E5F7317FE850C8CF55252 /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24FCED66BF00671FA75C697 /* PrivateKey.swift */; };
 		EE00000000000000000003AA /* Tunnel.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 157527332FA34E08006083F7 /* Tunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A3 /* TochkaGTunnelWG.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEEE000000000000000000A4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */; };
 		EEEE000000000000000000A7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3C2F98C2A700827BD0 /* libresolv.tbd */; };
 		EEEE000000000000000000A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15772A3A2F98C29E00827BD0 /* UIKit.framework */; platformFilters = (ios, xros, ); };
+		EF5C73CE8F5466DED2EB3153 /* WireGuardAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC2DA715C4EF48F12662C7 /* WireGuardAdapter.swift */; };
+		F86C56FD3E7C2BDFFCCD54B0 /* TunnelConfiguration+WgQuickConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437F787E880359BCFDC62C6E /* TunnelConfiguration+WgQuickConfig.swift */; };
+		FCDA1BA5E35D8F4CFD757AF0 /* IPAddressRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A881D43891FD4C4663327B7D /* IPAddressRange.swift */; };
+		FD26AAA5DC6EA3EAD4C81874 /* IPAddress+AddrInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAF907E0F9806C4DC9E8E99 /* IPAddress+AddrInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		08D02A2F4C1702A92F0AD384 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 152C3C652F86917C00FE99E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B75F0FF32466EA018C978BF;
+			remoteInfo = TunnelMacWG;
+		};
 		152C3C7B2F86917F00FE99E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 152C3C652F86917C00FE99E6 /* Project object */;
@@ -74,7 +98,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				1575273C2FA34E08006083F7 /* Tunnel.appex in Embed Foundation Extensions */,
 				152C3CDC2F87FB9800FE99E6 /* TochkaGTunnel.appex in Embed Foundation Extensions */,
 				EEEE000000000000000000A3 /* TochkaGTunnelWG.appex in Embed Foundation Extensions */,
 			);
@@ -107,8 +130,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				15F090652FA3C3B3008AE5B8 /* TochkaGTunnelWG.appex in Embed App Extensions */,
 				EE00000000000000000003AA /* Tunnel.appex in Embed App Extensions */,
+				4190ACA50E73B5FBE328151C /* TunnelMacWG.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +149,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02FC2DA715C4EF48F12662C7 /* WireGuardAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WireGuardAdapter.swift; path = TunnelMacWG/WireGuardKit/WireGuardAdapter.swift; sourceTree = "<group>"; };
+		07DDC655260DB31E66BA553B /* DNSServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DNSServer.swift; path = TunnelMacWG/WireGuardKit/DNSServer.swift; sourceTree = "<group>"; };
 		152C3C6D2F86917C00FE99E6 /* tochkaG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tochkaG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		152C3C7A2F86917F00FE99E6 /* tochkaGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		152C3C842F86917F00FE99E6 /* tochkaGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tochkaGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,10 +162,28 @@
 		157527332FA34E08006083F7 /* Tunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Tunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		15772A3A2F98C29E00827BD0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		15772A3C2F98C2A700827BD0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.4.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
+		248AABC801C689733674AA38 /* String+ArrayConversion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+ArrayConversion.swift"; path = "TunnelMacWG/WireGuardKit/String+ArrayConversion.swift"; sourceTree = "<group>"; };
+		2E399EB3DDFCF5658A8D8B63 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PacketTunnelProvider.swift; path = TunnelMacWG/PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		3CAF907E0F9806C4DC9E8E99 /* IPAddress+AddrInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IPAddress+AddrInfo.swift"; path = "TunnelMacWG/WireGuardKit/IPAddress+AddrInfo.swift"; sourceTree = "<group>"; };
+		4041CB954C9307AC305781B5 /* DNSResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DNSResolver.swift; path = TunnelMacWG/WireGuardKit/DNSResolver.swift; sourceTree = "<group>"; };
+		4174486FF61535F6BA94FEAE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		437F787E880359BCFDC62C6E /* TunnelConfiguration+WgQuickConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TunnelConfiguration+WgQuickConfig.swift"; path = "TunnelMacWG/WireGuardKit/TunnelConfiguration+WgQuickConfig.swift"; sourceTree = "<group>"; };
+		46683727DBC69E65317791D3 /* key.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = key.c; path = TunnelMacWG/WireGuardKitC/key.c; sourceTree = "<group>"; };
+		972BDABD5469087B97D1ABFE /* x25519.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = x25519.c; path = TunnelMacWG/WireGuardKitC/x25519.c; sourceTree = "<group>"; };
+		9CB260829BED14327454F252 /* TunnelConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TunnelConfiguration.swift; path = TunnelMacWG/WireGuardKit/TunnelConfiguration.swift; sourceTree = "<group>"; };
+		A1CF304051BC6227A60A3A33 /* PeerConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PeerConfiguration.swift; path = TunnelMacWG/WireGuardKit/PeerConfiguration.swift; sourceTree = "<group>"; };
+		A37D080A2A214D10C8E59A41 /* PacketTunnelSettingsGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PacketTunnelSettingsGenerator.swift; path = TunnelMacWG/WireGuardKit/PacketTunnelSettingsGenerator.swift; sourceTree = "<group>"; };
+		A3EDACD79567618991432C8F /* TunnelMacWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TunnelMacWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A881D43891FD4C4663327B7D /* IPAddressRange.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IPAddressRange.swift; path = TunnelMacWG/WireGuardKit/IPAddressRange.swift; sourceTree = "<group>"; };
 		BB000000000000000000BB01 /* TochkaGTunnel.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = TochkaGTunnel.xcconfig; path = TochkaGTunnel/TochkaGTunnel.xcconfig; sourceTree = "<group>"; };
 		CC000000000000000000CC01 /* Tunnel.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Tunnel.xcconfig; path = Tunnel/Tunnel.xcconfig; sourceTree = "<group>"; };
 		CC11223344556677889900CC /* TochkaGTunnel/SafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TochkaGTunnel/SafeKVC.m; sourceTree = "<group>"; };
+		CE6F0F95A84F2C250EBFAD06 /* InterfaceConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InterfaceConfiguration.swift; path = TunnelMacWG/WireGuardKit/InterfaceConfiguration.swift; sourceTree = "<group>"; };
+		D4754ABAEFA2274C3FC950F2 /* TunnelMacWG.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = TunnelMacWG.xcconfig; path = TunnelMacWG/TunnelMacWG.xcconfig; sourceTree = "<group>"; };
+		D9ED718759A5FB262B74089C /* Endpoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = TunnelMacWG/WireGuardKit/Endpoint.swift; sourceTree = "<group>"; };
 		EEEE000000000000000000A2 /* TochkaGTunnelWG.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TochkaGTunnelWG.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F24FCED66BF00671FA75C697 /* PrivateKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PrivateKey.swift; path = TunnelMacWG/WireGuardKit/PrivateKey.swift; sourceTree = "<group>"; };
+		FACBF087A9B1CAD1F5ADD5FA /* Array+ConcurrentMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+ConcurrentMap.swift"; path = "TunnelMacWG/WireGuardKit/Array+ConcurrentMap.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -266,6 +309,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		155F2D753948F89682FCA664 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF91506ABA6A838A851A95C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		157527052FA34D8F006083F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -323,6 +374,8 @@
 				152C3CB72F869CC000FE99E6 /* Frameworks */,
 				152C3C6E2F86917C00FE99E6 /* Products */,
 				1541D03B2F9E5AD800880A7D /* Recovered References */,
+				D4754ABAEFA2274C3FC950F2 /* TunnelMacWG.xcconfig */,
+				CB9949EF1BD8DBD4DFB1D840 /* TunnelMacWG */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,6 +391,7 @@
 				157527142FA34D92006083F7 /* tochaGmacTests.xctest */,
 				1575271E2FA34D92006083F7 /* tochaGmacUITests.xctest */,
 				157527332FA34E08006083F7 /* Tunnel.appex */,
+				A3EDACD79567618991432C8F /* TunnelMacWG.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -348,6 +402,7 @@
 				15772A3C2F98C2A700827BD0 /* libresolv.tbd */,
 				15772A3A2F98C29E00827BD0 /* UIKit.framework */,
 				152C3CB82F869CC100FE99E6 /* NetworkExtension.framework */,
+				D96F0FE26EFE51DCB882E6CA /* OS X */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -360,6 +415,38 @@
 				CC000000000000000000CC01 /* Tunnel.xcconfig */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		CB9949EF1BD8DBD4DFB1D840 /* TunnelMacWG */ = {
+			isa = PBXGroup;
+			children = (
+				2E399EB3DDFCF5658A8D8B63 /* PacketTunnelProvider.swift */,
+				FACBF087A9B1CAD1F5ADD5FA /* Array+ConcurrentMap.swift */,
+				4041CB954C9307AC305781B5 /* DNSResolver.swift */,
+				07DDC655260DB31E66BA553B /* DNSServer.swift */,
+				D9ED718759A5FB262B74089C /* Endpoint.swift */,
+				3CAF907E0F9806C4DC9E8E99 /* IPAddress+AddrInfo.swift */,
+				A881D43891FD4C4663327B7D /* IPAddressRange.swift */,
+				CE6F0F95A84F2C250EBFAD06 /* InterfaceConfiguration.swift */,
+				A37D080A2A214D10C8E59A41 /* PacketTunnelSettingsGenerator.swift */,
+				A1CF304051BC6227A60A3A33 /* PeerConfiguration.swift */,
+				F24FCED66BF00671FA75C697 /* PrivateKey.swift */,
+				248AABC801C689733674AA38 /* String+ArrayConversion.swift */,
+				437F787E880359BCFDC62C6E /* TunnelConfiguration+WgQuickConfig.swift */,
+				9CB260829BED14327454F252 /* TunnelConfiguration.swift */,
+				02FC2DA715C4EF48F12662C7 /* WireGuardAdapter.swift */,
+				46683727DBC69E65317791D3 /* key.c */,
+				972BDABD5469087B97D1ABFE /* x25519.c */,
+			);
+			name = TunnelMacWG;
+			sourceTree = SOURCE_ROOT;
+		};
+		D96F0FE26EFE51DCB882E6CA /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				4174486FF61535F6BA94FEAE /* Cocoa.framework */,
+			);
+			name = "OS X";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,7 +466,6 @@
 			);
 			dependencies = (
 				152C3CDB2F87FB9800FE99E6 /* PBXTargetDependency */,
-				1575273B2FA34E08006083F7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				152C3C6F2F86917C00FE99E6 /* tochkaG */,
@@ -465,13 +551,12 @@
 			);
 			dependencies = (
 				EE00000000000000000001AA /* PBXTargetDependency */,
+				8E644E1E70D32A6A324155D6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				157527092FA34D8F006083F7 /* tochaGmac */,
 			);
 			name = tochaGmac;
-			packageProductDependencies = (
-			);
 			productName = tochaGmac;
 			productReference = 157527082FA34D8F006083F7 /* tochaGmac.app */;
 			productType = "com.apple.product-type.application";
@@ -493,8 +578,6 @@
 				157527172FA34D92006083F7 /* tochaGmacTests */,
 			);
 			name = tochaGmacTests;
-			packageProductDependencies = (
-			);
 			productName = tochaGmacTests;
 			productReference = 157527142FA34D92006083F7 /* tochaGmacTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -516,8 +599,6 @@
 				157527212FA34D92006083F7 /* tochaGmacUITests */,
 			);
 			name = tochaGmacUITests;
-			packageProductDependencies = (
-			);
 			productName = tochaGmacUITests;
 			productReference = 1575271E2FA34D92006083F7 /* tochaGmacUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -538,10 +619,25 @@
 				157527352FA34E08006083F7 /* Tunnel */,
 			);
 			name = Tunnel;
-			packageProductDependencies = (
-			);
 			productName = Tunnel;
 			productReference = 157527332FA34E08006083F7 /* Tunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3B75F0FF32466EA018C978BF /* TunnelMacWG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAB9A85F3F3B24A9FA5C8D87 /* Build configuration list for PBXNativeTarget "TunnelMacWG" */;
+			buildPhases = (
+				97AF12A00E85BA892068D11D /* Sources */,
+				155F2D753948F89682FCA664 /* Frameworks */,
+				471B57542A6708C96FBCE44B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TunnelMacWG;
+			productName = TunnelMacWG;
+			productReference = A3EDACD79567618991432C8F /* TunnelMacWG.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		EEEE000000000000000000A1 /* TochkaGTunnelWG */ = {
@@ -629,6 +725,7 @@
 				157527132FA34D92006083F7 /* tochaGmacTests */,
 				1575271D2FA34D92006083F7 /* tochaGmacUITests */,
 				157527322FA34E08006083F7 /* Tunnel */,
+				3B75F0FF32466EA018C978BF /* TunnelMacWG */,
 			);
 		};
 /* End PBXProject section */
@@ -684,6 +781,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		157527312FA34E08006083F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		471B57542A6708C96FBCE44B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -757,6 +861,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97AF12A00E85BA892068D11D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DBA96724A464403E15B9F09 /* PacketTunnelProvider.swift in Sources */,
+				0DDB4EC0027F36ACC1D29BF5 /* Array+ConcurrentMap.swift in Sources */,
+				34EBFAEFC29AF01893607470 /* DNSResolver.swift in Sources */,
+				6B2AB8AE0AB7D63CBECDA978 /* DNSServer.swift in Sources */,
+				C866F23A50B360E473FB9187 /* Endpoint.swift in Sources */,
+				FD26AAA5DC6EA3EAD4C81874 /* IPAddress+AddrInfo.swift in Sources */,
+				FCDA1BA5E35D8F4CFD757AF0 /* IPAddressRange.swift in Sources */,
+				6A5B68D487774FA10A32F97E /* InterfaceConfiguration.swift in Sources */,
+				DA5A8E55E4AF2754C2C2B022 /* PacketTunnelSettingsGenerator.swift in Sources */,
+				658CBC6DCD583957D6432FA2 /* PeerConfiguration.swift in Sources */,
+				DE4E5F7317FE850C8CF55252 /* PrivateKey.swift in Sources */,
+				CA59897667F66F40FB33F90F /* String+ArrayConversion.swift in Sources */,
+				F86C56FD3E7C2BDFFCCD54B0 /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
+				D65F6BF01C67A2276D85FDBB /* TunnelConfiguration.swift in Sources */,
+				EF5C73CE8F5466DED2EB3153 /* WireGuardAdapter.swift in Sources */,
+				70507880B6CFC2268CA15B41 /* key.c in Sources */,
+				288F8E3EE2A9992E62EDEF34 /* x25519.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EEEE000000000000000000B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -792,10 +920,11 @@
 			target = 157527072FA34D8F006083F7 /* tochaGmac */;
 			targetProxy = 1575271F2FA34D92006083F7 /* PBXContainerItemProxy */;
 		};
-		1575273B2FA34E08006083F7 /* PBXTargetDependency */ = {
+		8E644E1E70D32A6A324155D6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 157527322FA34E08006083F7 /* Tunnel */;
-			targetProxy = 1575273A2FA34E08006083F7 /* PBXContainerItemProxy */;
+			name = TunnelMacWG;
+			target = 3B75F0FF32466EA018C978BF /* TunnelMacWG */;
+			targetProxy = 08D02A2F4C1702A92F0AD384 /* PBXContainerItemProxy */;
 		};
 		EE00000000000000000001AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -928,7 +1057,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = tochkaG/tochkaG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -952,20 +1081,21 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Debug;
@@ -977,7 +1107,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = tochkaG/tochkaG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1001,20 +1131,21 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Release;
@@ -1024,7 +1155,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1050,7 +1181,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1075,7 +1206,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1100,7 +1231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1128,7 +1259,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TochkaGTunnel/Info.plist;
@@ -1160,7 +1291,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1171,7 +1302,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnel/TochkaGTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TochkaGTunnel/Info.plist;
@@ -1202,7 +1333,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnel/TochkaGTunnel-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1215,13 +1346,16 @@
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = tochkaG;
+				INFOPLIST_KEY_CFBundleName = tochkaG;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1230,8 +1364,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac;
-				INFOPLIST_KEY_CFBundleDisplayName = tochkaG;
-				INFOPLIST_KEY_CFBundleName = tochkaG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
@@ -1252,13 +1384,16 @@
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = tochkaG;
+				INFOPLIST_KEY_CFBundleName = tochkaG;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1267,8 +1402,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac;
-				INFOPLIST_KEY_CFBundleDisplayName = tochkaG;
-				INFOPLIST_KEY_CFBundleName = tochkaG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
@@ -1287,7 +1420,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CJ959CM4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
@@ -1310,7 +1443,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CJ959CM4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
@@ -1332,7 +1465,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CJ959CM4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
@@ -1354,7 +1487,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = tochaGmac/tochaGmac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CJ959CM4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.3;
@@ -1378,7 +1511,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tunnel/Tunnel.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1417,7 +1550,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tunnel/Tunnel.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1449,13 +1582,69 @@
 			};
 			name = Release;
 		};
+		1B2BD58B1756542DA084E0F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4754ABAEFA2274C3FC950F2 /* TunnelMacWG.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TunnelMacWG/TunnelMacWG.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TunnelMacWG/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac.tunnelwg;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		371423737E11E4A478AF30CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4754ABAEFA2274C3FC950F2 /* TunnelMacWG.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TunnelMacWG/TunnelMacWG.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
+				DEVELOPMENT_TEAM = 9ZZZ238P2J;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TunnelMacWG/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac.tunnelwg;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		EEEE000000000000000000D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnelWG/TochkaGTunnelWG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1464,6 +1653,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TochkaGTunnelWG/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TochkaGTunnel;
+				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
+				INFOPLIST_KEY_CFBundleVersion = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1476,11 +1667,7 @@
 					"$(PROJECT_DIR)/TochkaGTunnelWG/WireGuardKitGo",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac.tunnelwg;
-				CURRENT_PROJECT_VERSION = 1;
-				MARKETING_VERSION = 1.0;
-				INFOPLIST_KEY_CFBundleVersion = 1;
-				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnelwg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
@@ -1496,7 +1683,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1506,11 +1693,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TochkaGTunnelWG/TochkaGTunnelWG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 9ZZZ238P2J;
 				"EXCLUDED_ARCHS[sdk=macosx*]" = x86_64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TochkaGTunnelWG/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TochkaGTunnel;
+				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
+				INFOPLIST_KEY_CFBundleVersion = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1523,11 +1713,7 @@
 					"$(PROJECT_DIR)/TochkaGTunnelWG/WireGuardKitGo",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.mac.tunnelwg;
-				CURRENT_PROJECT_VERSION = 1;
-				MARKETING_VERSION = 1.0;
-				INFOPLIST_KEY_CFBundleVersion = 1;
-				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tochkag.app.tunnelwg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1541,7 +1727,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "TochkaGTunnelWG/TochkaGTunnelWG-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1635,6 +1821,15 @@
 			buildConfigurations = (
 				EEEE000000000000000000D2 /* Debug */,
 				EEEE000000000000000000D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAB9A85F3F3B24A9FA5C8D87 /* Build configuration list for PBXNativeTarget "TunnelMacWG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				371423737E11E4A478AF30CD /* Release */,
+				1B2BD58B1756542DA084E0F2 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

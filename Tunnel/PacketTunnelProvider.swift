@@ -93,8 +93,48 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                        path: path, pbk: pbk, sid: sid, flow: flow,
                                        fp: fp, routing: routing)
 
+        // NEPacketTunnelNetworkSettings принимает только IP-литерал.
+        // Панель отдаёт хосты по имени — резолвим все A-записи:
+        // первая идёт в tunnelRemoteAddress, все попадают в excludedRoutes,
+        // иначе при round-robin Xray уйдёт на неисключённый IP и получит петлю.
+        func resolveIPv4(_ host: String) -> [String] {
+            var hints = addrinfo(ai_flags: 0, ai_family: AF_INET, ai_socktype: SOCK_STREAM,
+                                 ai_protocol: 0, ai_addrlen: 0,
+                                 ai_canonname: nil, ai_addr: nil, ai_next: nil)
+            var res: UnsafeMutablePointer<addrinfo>? = nil
+            guard getaddrinfo(host, nil, &hints, &res) == 0, let head = res else { return [] }
+            defer { freeaddrinfo(head) }
+            var out: [String] = []
+            var cur: UnsafeMutablePointer<addrinfo>? = head
+            while let node = cur {
+                if let sa = node.pointee.ai_addr {
+                    var buf = [CChar](repeating: 0, count: Int(INET_ADDRSTRLEN))
+                    sa.withMemoryRebound(to: sockaddr_in.self, capacity: 1) { sin in
+                        var a = sin.pointee.sin_addr
+                        inet_ntop(AF_INET, &a, &buf, socklen_t(INET_ADDRSTRLEN))
+                    }
+                    let ip = String(cString: buf)
+                    if !ip.isEmpty, !out.contains(ip) { out.append(ip) }
+                }
+                cur = node.pointee.ai_next
+            }
+            return out
+        }
+
+        let isLiteralIP = address.split(separator: ".").count == 4
+            && address.split(separator: ".").allSatisfy { UInt8($0) != nil }
+        let serverIPs = isLiteralIP ? [address] : resolveIPv4(address)
+        guard let remoteIP = serverIPs.first else {
+            flog("VLESS: DNS FAIL — не удалось резолвить \(address)")
+            completionHandler(NSError(domain: "TochkaG", code: 2, userInfo: [
+                NSLocalizedDescriptionKey: "Не удалось определить IP сервера \(address)"
+            ]))
+            return
+        }
+        flog("VLESS: resolved \(address) -> \(serverIPs.joined(separator: ", "))")
+
         // Build network settings
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: address)
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: remoteIP)
         settings.mtu = NSNumber(value: 1500)
         let dns = NEDNSSettings(servers: ["1.1.1.1", "8.8.8.8"])
         dns.matchDomains = [""]
@@ -103,8 +143,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let ipv4 = NEIPv4Settings(addresses: ["172.19.0.1"], subnetMasks: ["255.255.255.252"])
         ipv4.includedRoutes = [NEIPv4Route.default()]
         // Exclude the VPN server itself so its packets don't route into the tunnel
-        ipv4.excludedRoutes = [
-            NEIPv4Route(destinationAddress: address, subnetMask: "255.255.255.255"),
+        ipv4.excludedRoutes =
+            serverIPs.map { NEIPv4Route(destinationAddress: $0, subnetMask: "255.255.255.255") } + [
             NEIPv4Route(destinationAddress: "1.1.1.1", subnetMask: "255.255.255.255"),
             NEIPv4Route(destinationAddress: "1.0.0.1", subnetMask: "255.255.255.255"),
             NEIPv4Route(destinationAddress: "8.8.8.8", subnetMask: "255.255.255.255"),

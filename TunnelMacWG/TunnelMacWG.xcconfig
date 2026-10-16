@@ -1,0 +1,5 @@
+HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/TunnelMacWG
+SWIFT_INCLUDE_PATHS = $(inherited) $(SRCROOT)/TunnelMacWG/WireGuardKitC $(SRCROOT)/TunnelMacWG/WireGuardKitGo
+LIBRARY_SEARCH_PATHS = $(inherited) $(SRCROOT)/TunnelMacWG/WireGuardKitGo
+OTHER_LDFLAGS = $(inherited) -lwg-go -framework NetworkExtension
+SWIFT_OBJC_BRIDGING_HEADER = $(SRCROOT)/TunnelMacWG/TunnelMacWG-Bridging-Header.h

@@ -35,6 +35,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
         let presharedKey = cfg["presharedKey"] as? String ?? ""
+        let extra = cfg["awg"] as? [String: String] ?? [:]
 
         os_log("WG CONFIG: endpoint=%{public}@ addr=%{public}@",
                log: log, type: .error, endpoint, address)
@@ -42,9 +43,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let wgQuick = buildWgQuick(
             privateKey: privateKey, address: address, dns: dns,
             publicKey: publicKey, endpoint: endpoint,
-            allowedIPs: allowedIPs, presharedKey: presharedKey
+            allowedIPs: allowedIPs, presharedKey: presharedKey,
+            extra: extra
         )
-        os_log("WG QUICK:\n%{public}@", log: log, type: .error, wgQuick)
+        os_log("WG QUICK: %d bytes, awg keys: %{public}@", log: log, type: .error,
+               wgQuick.count, extra.keys.sorted().joined(separator: ","))
 
         let tunnelConfig: TunnelConfiguration
         do {
@@ -89,32 +92,30 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     private func buildWgQuick(privateKey: String, address: String, dns: String,
                                publicKey: String, endpoint: String,
-                               allowedIPs: String, presharedKey: String) -> String {
-        let addrList = address.split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty }.joined(separator: ", ")
-        let dnsList = dns.split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty }.joined(separator: ", ")
-        let allowedList = allowedIPs.split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty }.joined(separator: ", ")
-
-        var config = """
-        [Interface]
-        PrivateKey = \(privateKey)
-        Address = \(addrList.isEmpty ? address : addrList)
-        DNS = \(dnsList.isEmpty ? dns : dnsList)
-
-        [Peer]
-        PublicKey = \(publicKey)
-        Endpoint = \(endpoint)
-        AllowedIPs = \(allowedList.isEmpty ? "0.0.0.0/0" : allowedList)
-        """
-        if !presharedKey.isEmpty {
-            config += "\nPresharedKey = \(presharedKey)"
+                               allowedIPs: String, presharedKey: String,
+                               extra: [String: String]) -> String {
+        func list(_ s: String) -> String {
+            s.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { !$0.isEmpty }.joined(separator: ", ")
         }
-        return config
+        let addrList = list(address), dnsList = list(dns), allowedList = list(allowedIPs)
+        // AWG 1.0 — то, что понимает текущий парсер WireGuardKit из amneziawg-apple
+        let awgKeys = ["Jc", "Jmin", "Jmax", "S1", "S2", "H1", "H2", "H3", "H4"]
+
+        var iface = ["[Interface]",
+                     "PrivateKey = \(privateKey)",
+                     "Address = \(addrList.isEmpty ? address : addrList)"]
+        if !dnsList.isEmpty { iface.append("DNS = \(dnsList)") }
+        if let mtu = extra["MTU"], !mtu.isEmpty { iface.append("MTU = \(mtu)") }
+        for k in awgKeys { if let v = extra[k], !v.isEmpty { iface.append("\(k) = \(v)") } }
+
+        var peer = ["[Peer]", "PublicKey = \(publicKey)"]
+        if !presharedKey.isEmpty { peer.append("PresharedKey = \(presharedKey)") }
+        peer.append("Endpoint = \(endpoint)")
+        peer.append("AllowedIPs = \(allowedList.isEmpty ? "0.0.0.0/0" : allowedList)")
+        if let ka = extra["PersistentKeepalive"], !ka.isEmpty { peer.append("PersistentKeepalive = \(ka)") }
+
+        return (iface + [""] + peer).joined(separator: "\n")
     }
 }
 

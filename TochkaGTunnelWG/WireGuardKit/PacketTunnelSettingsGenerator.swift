@@ -47,6 +47,84 @@ class PacketTunnelSettingsGenerator {
         if let listenPort = tunnelConfiguration.interface.listenPort {
             wgSettings.append("listen_port=\(listenPort)\n")
         }
+
+        if let junkPacketCount = tunnelConfiguration.interface.junkPacketCount {
+            wgSettings.append("jc=\(junkPacketCount)\n")
+        }
+        if let junkPacketMinSize = tunnelConfiguration.interface.junkPacketMinSize {
+            wgSettings.append("jmin=\(junkPacketMinSize)\n")
+        }
+        if let junkPacketMaxSize = tunnelConfiguration.interface.junkPacketMaxSize {
+            wgSettings.append("jmax=\(junkPacketMaxSize)\n")
+        }
+        if let initPacketJunkSize = tunnelConfiguration.interface.initPacketJunkSize {
+            wgSettings.append("s1=\(initPacketJunkSize)\n")
+        }
+        if let responsePacketJunkSize = tunnelConfiguration.interface.responsePacketJunkSize {
+            wgSettings.append("s2=\(responsePacketJunkSize)\n")
+        }
+        if let cookieReplyPacketJunkSize = tunnelConfiguration.interface.cookieReplyPacketJunkSize {
+            wgSettings.append("s3=\(cookieReplyPacketJunkSize)\n")
+        }
+        if let transportPacketJunkSize = tunnelConfiguration.interface.transportPacketJunkSize {
+            wgSettings.append("s4=\(transportPacketJunkSize)\n")
+        }
+        if let initPacketMagicHeader = tunnelConfiguration.interface.initPacketMagicHeader {
+            wgSettings.append("h1=\(initPacketMagicHeader)\n")
+        }
+        if let responsePacketMagicHeader = tunnelConfiguration.interface.responsePacketMagicHeader {
+            wgSettings.append("h2=\(responsePacketMagicHeader)\n")
+        }
+        if let underloadPacketMagicHeader = tunnelConfiguration.interface.underloadPacketMagicHeader {
+            wgSettings.append("h3=\(underloadPacketMagicHeader)\n")
+        }
+        if let transportPacketMagicHeader = tunnelConfiguration.interface.transportPacketMagicHeader {
+            wgSettings.append("h4=\(transportPacketMagicHeader)\n")
+        }
+        if let specialJunk1 = tunnelConfiguration.interface.specialJunk1 {
+            wgSettings.append("i1=\(specialJunk1)\n")
+        }
+        if let specialJunk2 = tunnelConfiguration.interface.specialJunk2 {
+            wgSettings.append("i2=\(specialJunk2)\n")
+        }
+        if let specialJunk3 = tunnelConfiguration.interface.specialJunk3 {
+            wgSettings.append("i3=\(specialJunk3)\n")
+        }
+        if let specialJunk4 = tunnelConfiguration.interface.specialJunk4 {
+            wgSettings.append("i4=\(specialJunk4)\n")
+        }
+        if let specialJunk5 = tunnelConfiguration.interface.specialJunk5 {
+            wgSettings.append("i5=\(specialJunk5)\n")
+        }
+        if let headerProtectionKey = tunnelConfiguration.interface.headerProtectionKey {
+            wgSettings.append("header_protection_key=\(headerProtectionKey.hexKey)\n")
+        }
+        if let contentPaddingAddition = tunnelConfiguration.interface.contentPaddingAddition,
+           !contentPaddingAddition.isEmpty {
+            wgSettings.append("content_padding_addition=\(contentPaddingAddition)\n")
+        }
+        if let rekeyAfterTime = tunnelConfiguration.interface.rekeyAfterTime, !rekeyAfterTime.isEmpty {
+            wgSettings.append("rekey_after_time=\(rekeyAfterTime)\n")
+        }
+        if let rekeyTimeout = tunnelConfiguration.interface.rekeyTimeout, !rekeyTimeout.isEmpty {
+            wgSettings.append("rekey_timeout=\(rekeyTimeout)\n")
+        }
+        if let rejectAfterTime = tunnelConfiguration.interface.rejectAfterTime, !rejectAfterTime.isEmpty {
+            wgSettings.append("reject_after_time=\(rejectAfterTime)\n")
+        }
+        if let keepaliveTimeout = tunnelConfiguration.interface.keepaliveTimeout, !keepaliveTimeout.isEmpty {
+            wgSettings.append("keepalive_timeout=\(keepaliveTimeout)\n")
+        }
+        if let maxHandshakeAttempts = tunnelConfiguration.interface.maxHandshakeAttempts,
+           !maxHandshakeAttempts.isEmpty {
+            wgSettings.append("max_handshake_attempts=\(maxHandshakeAttempts)\n")
+        }
+        if let randomTrailers = tunnelConfiguration.interface.randomTrailers, !randomTrailers.isEmpty {
+            wgSettings.append("random_trailers=\(Self.uapiBool(randomTrailers))\n")
+        }
+        if let disableCookies = tunnelConfiguration.interface.disableCookies, !disableCookies.isEmpty {
+            wgSettings.append("disable_cookies=\(Self.uapiBool(disableCookies))\n")
+        }
         if !tunnelConfiguration.peers.isEmpty {
             wgSettings.append("replace_peers=true\n")
         }
@@ -64,7 +142,7 @@ class PacketTunnelSettingsGenerator {
             }
             resolutionResults.append(result)
 
-            let persistentKeepAlive = peer.persistentKeepAlive ?? 0
+            let persistentKeepAlive = peer.persistentKeepAlive ?? "0"
             wgSettings.append("persistent_keepalive_interval=\(persistentKeepAlive)\n")
             if !peer.allowedIPs.isEmpty {
                 wgSettings.append("replace_allowed_ips=true\n")
@@ -115,13 +193,16 @@ class PacketTunnelSettingsGenerator {
 
         let (ipv4Addresses, ipv6Addresses) = addresses()
         let (ipv4IncludedRoutes, ipv6IncludedRoutes) = includedRoutes()
+        let (ipv4ExcludedRoutes, ipv6ExcludedRoutes) = excludedRoutes()
 
         let ipv4Settings = NEIPv4Settings(addresses: ipv4Addresses.map { $0.destinationAddress }, subnetMasks: ipv4Addresses.map { $0.destinationSubnetMask })
         ipv4Settings.includedRoutes = ipv4IncludedRoutes
+        ipv4Settings.excludedRoutes = ipv4ExcludedRoutes
         networkSettings.ipv4Settings = ipv4Settings
 
         let ipv6Settings = NEIPv6Settings(addresses: ipv6Addresses.map { $0.destinationAddress }, networkPrefixLengths: ipv6Addresses.map { $0.destinationNetworkPrefixLength })
         ipv6Settings.includedRoutes = ipv6IncludedRoutes
+        ipv6Settings.excludedRoutes = ipv6ExcludedRoutes
         networkSettings.ipv6Settings = ipv6Settings
 
         return networkSettings
@@ -171,6 +252,45 @@ class PacketTunnelSettingsGenerator {
             }
         }
         return (ipv4IncludedRoutes, ipv6IncludedRoutes)
+    }
+
+    private func excludedRoutes() -> ([NEIPv4Route], [NEIPv6Route]) {
+        var ipv4ExcludedRoutes = [NEIPv4Route]()
+        var ipv6ExcludedRoutes = [NEIPv6Route]()
+        for endpoint in resolvedEndpoints {
+            guard let endpoint = endpoint else { continue }
+            switch endpoint.host {
+            case .ipv4(let address):
+                ipv4ExcludedRoutes.append(NEIPv4Route(destinationAddress: "\(address)", subnetMask: "255.255.255.255"))
+            case .ipv6(let address):
+                ipv6ExcludedRoutes.append(NEIPv6Route(destinationAddress: "\(address)", networkPrefixLength: NSNumber(value: UInt8(128))))
+            default:
+                fatalError()
+            }
+        }
+
+        for peer in tunnelConfiguration.peers {
+            for addressRange in peer.excludeIPs {
+                if addressRange.address is IPv4Address {
+                    ipv4ExcludedRoutes.append(NEIPv4Route(destinationAddress: "\(addressRange.address)", subnetMask: "\(addressRange.subnetMask())"))
+                } else if addressRange.address is IPv6Address {
+                    ipv6ExcludedRoutes.append(NEIPv6Route(destinationAddress: "\(addressRange.address)", networkPrefixLength: NSNumber(value: addressRange.networkPrefixLength)))
+                }
+            }
+        }
+
+        return (ipv4ExcludedRoutes, ipv6ExcludedRoutes)
+    }
+
+    /// Converts awg-quick on/off (and 0/1/true/false) to UAPI 1/0.
+    /// amneziawg-go uses strconv.ParseBool and rejects "on"/"off".
+    private class func uapiBool(_ value: String) -> String {
+        switch value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() {
+        case "on", "1", "true", "t", "yes":
+            return "1"
+        default:
+            return "0"
+        }
     }
 
     private class func reresolveEndpoint(endpoint: Endpoint) -> EndpointResolutionResult {

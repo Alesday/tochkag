@@ -86,28 +86,75 @@ struct AddSubscriptionView: View {
     }
 
     func loadSubscription() {
-        guard let url = URL(string: urlText.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+        let trimmedURL = urlText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: trimmedURL) else {
             error = "Неверный URL"; return
         }
         isLoading = true; error = ""
-        URLSession.shared.dataTask(with: url) { data, _, err in
+
+        var req = URLRequest(url: url)
+        req.timeoutInterval = 20
+
+        // Панель Remnawave фильтрует по User-Agent и считает устройства по x-hwid.
+        let osv       = ProcessInfo.processInfo.operatingSystemVersion
+        let osVersion = "\(osv.majorVersion).\(osv.minorVersion).\(osv.patchVersion)"
+        let appVer    = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+        req.setValue(store.machineHWID, forHTTPHeaderField: "x-hwid")
+        req.setValue("macOS",           forHTTPHeaderField: "x-device-os")
+        req.setValue(osVersion,         forHTTPHeaderField: "x-ver-os")
+        req.setValue(store.macModelIdentifier, forHTTPHeaderField: "x-device-model")
+        req.setValue("TochkaG/\(appVer) (macOS \(osVersion); \(store.macModelIdentifier))",
+                     forHTTPHeaderField: "User-Agent")
+
+        URLSession.shared.dataTask(with: req) { data, resp, err in
             DispatchQueue.main.async {
                 isLoading = false
                 guard let data = data, err == nil else {
                     error = err?.localizedDescription ?? "Ошибка загрузки"; return
                 }
-                let text = String(data: data, encoding: .utf8) ?? ""
-                let decoded = (Data(base64Encoded: text.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .flatMap { String(data: $0, encoding: .utf8) }) ?? text
-                var added = 0
-                for line in decoded.components(separatedBy: .newlines) {
-                    let l = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if l.hasPrefix("vless://"), let cfg = parseVlessURL(l) {
-                        store.add(cfg); added += 1
+
+                if let http = resp as? HTTPURLResponse {
+                    store.parseSubscriptionHeaders(http)
+                    if http.statusCode == 404 {
+                        error = "Подписка не найдена — проверьте ссылку"; return
+                    }
+                    if http.statusCode == 403 {
+                        error = "Доступ закрыт — возможно, исчерпан лимит устройств"; return
+                    }
+                    guard (200..<300).contains(http.statusCode) else {
+                        error = "Панель вернула ошибку \(http.statusCode)"; return
                     }
                 }
-                if added > 0 { dismiss() }
-                else { error = "Не найдено конфигураций в подписке" }
+
+                let text = String(data: data, encoding: .utf8) ?? ""
+                let decoded = store.decodeBase64IfNeeded(text)
+
+                let lines = decoded
+                    .components(separatedBy: .newlines)
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { $0.hasPrefix("vless://") }
+
+                // Панель отдаёт заглушку-инструкцию вместо конфигов, когда запрос
+                // идёт через включённый VPN, исчерпан лимит устройств или нет хостов.
+                let real = lines.filter {
+                    !$0.contains("0.0.0.0:1") &&
+                    !$0.contains("00000000-0000-0000-0000-000000000000")
+                }
+
+                if real.isEmpty {
+                    error = lines.isEmpty
+                        ? "Не найдено конфигураций в подписке"
+                        : "Панель вернула заглушку: отключите VPN и повторите, либо проверьте лимит устройств"
+                    return
+                }
+
+                let parsed = real.compactMap { store.parseVlessLine($0) }
+                guard !parsed.isEmpty else {
+                    error = "Не удалось разобрать конфигурации"; return
+                }
+
+                store.addSubscription(parsed, url: trimmedURL)
+                dismiss()
             }
         }.resume()
     }
@@ -215,6 +262,7 @@ struct AddWireGuardManualView: View {
     @State private var presharedKey = ""
     @State private var wgText = ""
     @State private var showPaste = true
+    @State private var awgParams: [String: String]? = nil
 
     var body: some View {
         ScrollView {
@@ -252,17 +300,25 @@ struct AddWireGuardManualView: View {
                     field("Preshared Key (опционально)", text: $presharedKey, placeholder: "")
                 }
 
+                if let awg = awgParams, awg["Jc"] != nil {
+                    Label("AmneziaWG: \(awg.keys.sorted().joined(separator: ", "))",
+                          systemImage: "shield.lefthalf.filled")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
                 HStack {
                     Button("Отмена", role: .cancel) { dismiss() }
                     Spacer()
                     Button("Добавить") {
-                        let cfg = WireGuardConfig(
+                        var cfg = WireGuardConfig(
                             name: name.isEmpty ? endpoint : name,
                             privateKey: privateKey, address: address,
                             dns: dns, publicKey: publicKey,
                             endpoint: endpoint, allowedIPs: allowedIPs,
                             presharedKey: presharedKey
                         )
+                        cfg.awgParams = awgParams
                         store.add(.wireguard(cfg)); dismiss()
                     }
                     .buttonStyle(.borderedProminent)
@@ -306,6 +362,7 @@ struct AddWireGuardManualView: View {
                 if key == "PresharedKey"  { presharedKey = val }
             }
         }
+        awgParams = parseAWGParams(wgText)
     }
 }
 
@@ -415,15 +472,42 @@ struct ImportFileView: View {
             }
         }
         if !privateKey.isEmpty && !publicKey.isEmpty {
-            let cfg = WireGuardConfig(
+            var cfg = WireGuardConfig(
                 name: name, privateKey: privateKey, address: address,
                 dns: dns, publicKey: publicKey, endpoint: endpoint,
                 allowedIPs: allowedIPs, presharedKey: presharedKey
             )
+            cfg.awgParams = parseAWGParams(content)
             store.add(.wireguard(cfg))
             dismiss()
         } else {
             error = "Файл не содержит WireGuard конфигурацию"
         }
     }
+}
+
+
+// ── AmneziaWG ──────────────────────────────────────────────────────────────
+// Разбор параметров обфускации из .conf. Читаем построчно и строго по имени
+// ключа, чтобы не зацепить совпадения внутри base64-ключей.
+func parseAWGParams(_ text: String) -> [String: String]? {
+    let awgKeys: Set<String> = ["Jc","Jmin","Jmax","S1","S2","S3","S4",
+                                "H1","H2","H3","H4","I1","I2","I3","I4","I5",
+                                "J1","J2","J3","Itime"]
+    var result: [String: String] = [:]
+    for rawLine in text.components(separatedBy: .newlines) {
+        let parts = rawLine.split(separator: "=", maxSplits: 1)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+        guard parts.count == 2, !parts[1].isEmpty else { continue }
+        if awgKeys.contains(parts[0]) {
+            result[parts[0]] = parts[1]
+            continue
+        }
+        switch parts[0].lowercased() {
+        case "mtu":                 result["MTU"] = parts[1]
+        case "persistentkeepalive": result["PersistentKeepalive"] = parts[1]
+        default: break
+        }
+    }
+    return result.isEmpty ? nil : result
 }

@@ -19,6 +19,8 @@ struct WireGuardConfig: Codable, Identifiable {
     var endpoint:   String
     var allowedIPs: String
     var presharedKey: String = ""
+    /// Параметры обфускации AmneziaWG (Jc, Jmin, Jmax, S1, S2, H1–H4 и т.д.). nil — обычный WireGuard.
+    var awgParams: [String: String]? = nil
     var isActive:   Bool = false
 }
 
@@ -38,6 +40,7 @@ struct VlessConfig: Codable, Identifiable {
     var flow:        String = ""   // xtls-rprx-vision (optional)
     var fingerprint: String = "chrome" // utls fp
     var routing:  String = ""   // custom Xray routing JSON (optional)
+    var subscriptionURL: String? = nil   // если конфиг пришёл из подписки
     var isActive: Bool = false
 }
 

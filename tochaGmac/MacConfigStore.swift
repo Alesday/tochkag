@@ -14,6 +14,13 @@ class MacConfigStore: ObservableObject {
     @Published var selectedID: UUID? = nil
     @Published var showAddMenu = false
     @Published var addMode: AddMode? = nil
+    @Published var subscriptionURL: String? = nil
+    @Published var subscriptionInfo: SubscriptionInfo? = nil
+    @Published var isRefreshingSubscription: Bool = false
+    @Published var pingMs: [UUID: Int?] = [:]
+
+    /// Токен наблюдателя пробуждения из сна (см. MacSubscription).
+    var wakeObserver: NSObjectProtocol? = nil
 
     private let saveKey = "tochkag_configs"
     private let appGroup = "group.com.tochkag.vpn"
@@ -99,12 +106,19 @@ class MacConfigStore: ObservableObject {
             let existing = all.first {
                 ($0.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == targetBundle
             }
+            // Гасим только реально поднятые чужие туннели и ждём лишь в этом случае —
+            // иначе пауза в 0.5 с добавлялась к каждому подключению на пустом месте.
             let others = all.filter { $0 !== existing }
+            var stoppedSomething = false
             for m in others {
                 let st = m.connection.status
-                if st != .disconnected && st != .invalid { m.connection.stopVPNTunnel() }
+                if st != .disconnected && st != .invalid {
+                    m.connection.stopVPNTunnel()
+                    stoppedSomething = true
+                }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let wait: TimeInterval = stoppedSomething ? 0.5 : 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
                 self.applyAndStart(manager: existing ?? NETunnelProviderManager(), config: config)
             }
         }
@@ -135,6 +149,7 @@ class MacConfigStore: ObservableObject {
                 "address": wg.address, "dns": wg.dns,
                 "publicKey": wg.publicKey, "endpoint": wg.endpoint,
                 "allowedIPs": wg.allowedIPs, "presharedKey": wg.presharedKey,
+                "awg": wg.awgParams ?? [:],
             ]
         }
         manager.protocolConfiguration = proto
@@ -146,7 +161,7 @@ class MacConfigStore: ObservableObject {
             manager.loadFromPreferences { error in
                 if let error = error { print("VPN load error:", error); return }
                 self.vpnManager = manager
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                     do { try manager.connection.startVPNTunnel() }
                     catch { print("Tunnel error:", error) }
                 }

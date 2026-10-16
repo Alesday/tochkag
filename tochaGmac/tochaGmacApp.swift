@@ -13,5 +13,6 @@ struct tochaGmacApp: App {
         }
         .defaultSize(width: 900, height: 700)
         .windowResizability(.contentMinSize)
+        .windowStyle(.hiddenTitleBar)
     }
 }

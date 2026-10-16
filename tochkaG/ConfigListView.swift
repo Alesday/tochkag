@@ -1,5 +1,7 @@
 // ConfigListView.swift
-// TochkaG
+// TochkaG — перекрашен под BrandKit (liquid glass / aurora).
+// Логика не изменена: pin-top-6, пинг 30s, store.toggle/delete, NavigationLink в detail.
+// Color(hex:) теперь живёт в BrandKit.swift (не дублируем здесь).
 
 import SwiftUI
 import Network
@@ -9,22 +11,97 @@ struct ConfigListView: View {
     @EnvironmentObject var store: ConfigStore
     @State private var showAdd  = false
     @State private var showLogs = false
+    @State private var subToDelete: String? = nil
 
     var wgConfigs:    [VPNConfig] { store.configs.filter { $0.protocolType == .wireguard } }
-    var vlessConfigs: [VPNConfig] { store.configs.filter { $0.protocolType == .vless } }
+    var vlessConfigs: [VPNConfig] {
+        let pinnedTopCount = 6
+        let all = store.configs.filter { $0.protocolType == .vless }
+        let pinnedCount = min(pinnedTopCount, all.count)
+        let pinned = Array(all.prefix(pinnedCount))
+        let rest   = Array(all.dropFirst(pinnedCount))
+
+        let restSorted = rest.sorted { a, b in
+            let pa = store.pingMs[a.id] ?? nil
+            let pb = store.pingMs[b.id] ?? nil
+            switch (pa, pb) {
+            case (let x?, let y?): return x < y
+            case (_?, nil):        return true
+            case (nil, _?):        return false
+            default:               return a.name < b.name
+            }
+        }
+        return pinned + restSorted
+    }
 
     var body: some View {
+        ZStack {
+            AuroraBackground()
+            list
+        }
+        .preferredColorScheme(.dark)
+        .navigationTitle("")
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .task {
+            store.fetchSubscriptionInfo()
+        }
+        .sheet(isPresented: $showAdd) { AddConfigView().environmentObject(store) }
+        .overlay(alignment: .bottomTrailing) {
+            #if DEBUG
+            Button { showLogs = true } label: {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(14)
+                    .background(Circle().fill(Color.black.opacity(0.55)))
+            }
+            .padding(.trailing, 18).padding(.bottom, 28)
+            #endif
+        }
+        .sheet(isPresented: $showLogs) { LogsView() }
+        .alert("Удалить подписку?",
+               isPresented: Binding(
+                   get: { subToDelete != nil },
+                   set: { if !$0 { subToDelete = nil } }
+               )) {
+            Button("Отмена", role: .cancel) { subToDelete = nil }
+            Button("Удалить", role: .destructive) {
+                if let url = subToDelete { store.deleteSubscription(url: url) }
+                subToDelete = nil
+            }
+        } message: {
+            Text("Все серверы этой подписки будут удалены, VPN отключится.")
+        }
+
+        .onReceive(store.$configWasAdded) { added in
+            if added {
+                showAdd = false
+                store.configWasAdded = false
+                store.fetchSubscriptionInfo()
+            }
+        }
+    }
+
+    private var list: some View {
         List {
             Section {
                 VStack(spacing: 14) {
                     LogoView(size: 80)
+                    if let info = store.subscriptionInfo {
+                        SubscriptionCard(info: info, onRefresh: {
+                            store.refreshSubscription()
+                            store.fetchSubscriptionInfo()
+                        })
+                            .padding(.horizontal, 16)
+                            .padding(.top, 4)
+                    }
                     Button { showAdd = true } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "plus")
                             Text("Добавить конфиг")
                         }
-                        .font(.body)
-                        .foregroundColor(Color(red: 0.17, green: 0.66, blue: 0.91))
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(Brand.cyan)
                     }
                     .buttonStyle(.plain)
                 }
@@ -36,21 +113,54 @@ struct ConfigListView: View {
             }
 
             if !wgConfigs.isEmpty {
-                Section("WireGuard") {
+                Section {
                     ForEach(wgConfigs) { config in
                         ConfigRowView(config: config)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                     }
                     .onDelete { idx in idx.forEach { store.delete(wgConfigs[$0]) } }
-                }
+                } header: { sectionHeader("WireGuard") }
             }
 
             if !vlessConfigs.isEmpty {
-                Section("VLESS") {
+                Section {
                     ForEach(vlessConfigs) { config in
                         ConfigRowView(config: config)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                     }
                     .onDelete { idx in idx.forEach { store.delete(vlessConfigs[$0]) } }
-                }
+                } header: { sectionHeader("VLESS") }
+            }
+
+            if !store.subscriptionURLs.isEmpty {
+                Section {
+                    ForEach(store.subscriptionURLs, id: \.self) { sub in
+                        Button(role: .destructive) {
+                            subToDelete = sub
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "trash")
+                                Text("Удалить подписку")
+                                Spacer()
+                                Text(URL(string: sub)?.host ?? sub)
+                                    .font(.caption).foregroundStyle(Brand.faint)
+                                    .lineLimit(1).truncationMode(.middle)
+                            }
+                            .foregroundStyle(Brand.disconnect)
+                            .padding(.vertical, 11)
+                            .padding(.horizontal, 13)
+                            .brandGlass(cornerRadius: 16, tint: Color.white.opacity(0.05))
+                        }
+                        .buttonStyle(.plain)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                    }
+                } header: { sectionHeader("Подписки") }
             }
 
             if store.configs.isEmpty {
@@ -60,15 +170,19 @@ struct ConfigListView: View {
                         VStack(spacing: 8) {
                             Image(systemName: "shield.slash")
                                 .font(.system(size: 40))
-                                .foregroundColor(.secondary)
-                            Text("Нет конфигов").font(.headline)
+                                .foregroundStyle(Brand.faint)
+                            Text("Нет конфигов")
+                                .font(.headline)
+                                .foregroundStyle(Brand.text)
                             Text("Нажмите «Добавить конфиг»")
-                                .font(.caption).foregroundColor(.secondary)
+                                .font(.caption)
+                                .foregroundStyle(Brand.muted)
                         }
                         .padding(.vertical, 30)
                         Spacer()
                     }
                     .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 }
             }
 
@@ -77,20 +191,19 @@ struct ConfigListView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
                     .listRowBackground(Color.clear)
-            }
-
-        }
-        .navigationTitle("")
-
-        .sheet(isPresented: $showAdd) { AddConfigView().environmentObject(store) }
-        
-        
-        .onReceive(store.$configWasAdded) { added in
-            if added {
-                showAdd = false
-                store.configWasAdded = false
+                    .listRowSeparator(.hidden)
             }
         }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
+    }
+
+    private func sectionHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(Brand.muted)
+            .textCase(nil)
     }
 }
 
@@ -100,13 +213,16 @@ struct SupportFooterView: View {
     var body: some View {
         VStack(spacing: 4) {
             Text("Если у вас возникли вопросы по работе, обратитесь в поддержку.")
-                .font(.caption).foregroundColor(.secondary).multilineTextAlignment(.center)
-            Button("@satoshi_si") {
-                if let url = URL(string: "https://t.me/satoshi_si") {
+                .font(.caption)
+                .foregroundStyle(Brand.muted)
+                .multilineTextAlignment(.center)
+            Button("tchkg.online") {
+                if let url = URL(string: "https://tchkg.online") {
                     UIApplication.shared.open(url)
                 }
             }
-            .font(.caption).foregroundColor(.blue)
+            .font(.caption)
+            .foregroundStyle(Brand.cyan)
         }
     }
 }
@@ -127,51 +243,79 @@ struct ConfigRowView: View {
     @EnvironmentObject var store: ConfigStore
     let config: VPNConfig
 
-    @State private var pingMs: Int? = nil       // nil = пингуем/неизвестно
+    @State private var pingMs: Int? = nil
     @State private var pingFailed: Bool = false
     @State private var pingTask: Task<Void, Never>? = nil
 
     private var pingColor: Color {
-        if pingFailed { return .red }
-        guard let ms = pingMs else { return .secondary }
-        if ms < 100  { return .green }
-        if ms < 250  { return .orange }
-        return .red
+        if pingFailed { return Brand.coral }
+        guard let ms = pingMs else { return Brand.faint }
+        if ms < 90  { return Brand.pingGood }
+        if ms < 130 { return Brand.pingMid }
+        return Brand.pingHigh
     }
 
     private var pingText: String {
         if pingFailed { return "timeout" }
         guard let ms = pingMs else { return "…" }
-        return "\(ms) ms"
+        return "\(ms) мс"
     }
 
     var body: some View {
         HStack(spacing: 12) {
-            Circle()
-                .fill(config.isActive ? Color.green : Color.gray.opacity(0.4))
-                .frame(width: 10, height: 10)
+            ZStack {
+                RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    .fill((config.isActive ? Brand.cyan : Brand.faint).opacity(0.18))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 11, style: .continuous)
+                            .strokeBorder(Brand.edge, lineWidth: 1)
+                    )
+                    .frame(width: 36, height: 36)
+                Image(systemName: config.isActive ? "shield.fill" : "shield")
+                    .font(.system(size: 15))
+                    .foregroundStyle(config.isActive ? Brand.cyan : Brand.faint)
+            }
+
             NavigationLink(destination: ConfigDetailView(config: config).environmentObject(store)) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 8) {
-                        Text(config.name).font(.headline)
-                        Text(pingText)
-                            .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundColor(pingColor)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(pingColor.opacity(0.12))
-                            .clipShape(Capsule())
+                        Text(config.name)
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundStyle(Brand.text)
+                        if config.protocolType != .wireguard {
+                            Text(pingText)
+                                .font(.system(size: 11, weight: .medium).monospacedDigit())
+                                .foregroundStyle(pingColor)
+                                .padding(.horizontal, 7)
+                                .padding(.vertical, 2)
+                                .background(Capsule().fill(pingColor.opacity(0.14)))
+                        }
                     }
-                    Text(config.subtitle).font(.caption).foregroundColor(.secondary)
+                    Text(config.subtitle)
+                        .font(.system(size: 11.5))
+                        .foregroundStyle(Brand.muted)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
                 }
             }
-            Spacer()
+
+            Spacer(minLength: 8)
+
             Toggle("", isOn: Binding(
                 get: { config.isActive },
                 set: { _ in store.toggle(config) }
             ))
             .labelsHidden()
+            .tint(Brand.cyan)
         }
+        .padding(.vertical, 11)
+        .padding(.horizontal, 13)
+        .brandGlass(
+            cornerRadius: 18,
+            tint:   config.isActive ? Brand.cyan.opacity(0.14) : Brand.glassFill,
+            stroke: config.isActive ? Brand.cyan.opacity(0.5)  : Color.white.opacity(0.08)
+        )
+        .shadow(color: config.isActive ? Brand.blue.opacity(0.18) : .clear, radius: 18, y: 6)
         .onAppear { startPinging() }
         .onDisappear {
             pingTask?.cancel()
@@ -184,12 +328,13 @@ struct ConfigRowView: View {
         pingTask = Task {
             while !Task.isCancelled {
                 await measurePing()
-                try? await Task.sleep(nanoseconds: 30_000_000_000)  // 30s
+                try? await Task.sleep(nanoseconds: 30_000_000_000)
             }
         }
     }
 
     private func measurePing() async {
+        if config.protocolType == .wireguard { return }   // UDP — TCP-пинг невозможен
         let (host, port) = endpoint(for: config)
         let result = await PingService.tcpPing(host: host, port: port, timeout: 3.0)
         await MainActor.run {
@@ -197,9 +342,11 @@ struct ConfigRowView: View {
             case .success(let ms):
                 pingMs = ms
                 pingFailed = false
+                store.pingMs[config.id] = ms
             case .failure:
                 pingMs = nil
                 pingFailed = true
+                store.pingMs[config.id] = nil
             }
         }
     }
@@ -209,8 +356,6 @@ struct ConfigRowView: View {
         case .vless(let v):
             return (v.address, UInt16(v.port) ?? 443)
         case .wireguard:
-            // WG endpoint — UDP, TCP-проба не работает.
-            // Пингуем через туннель если активен, иначе — публичный анкер по 80 порту.
             if config.isActive {
                 return ("1.1.1.1", 80)
             } else {
@@ -232,7 +377,9 @@ enum PingService {
                 continuation.resume(returning: .failure(.failed))
                 return
             }
-            let conn = NWConnection(host: nwHost, port: nwPort, using: .tcp)
+            let params = NWParameters.tcp
+            params.prohibitedInterfaceTypes = [.other]   // мимо utun — меряем прямую задержку до сервера
+            let conn = NWConnection(host: nwHost, port: nwPort, using: params)
             let start = Date()
             let state = PingState(continuation: continuation, conn: conn)
 
@@ -256,7 +403,6 @@ enum PingService {
     }
 }
 
-// helper для безопасного one-shot-резолва continuation
 nonisolated private final class PingState: @unchecked Sendable {
     private let lock = NSLock()
     private var done = false
@@ -290,16 +436,5 @@ struct LogoView: View {
             .frame(width: size, height: size)
             .clipShape(RoundedRectangle(cornerRadius: size * 0.22))
             .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
-    }
-}
-
-extension Color {
-    init(hex: String) {
-        let v = Int(hex, radix: 16) ?? 0
-        self.init(
-            red:   Double((v >> 16) & 0xff) / 255,
-            green: Double((v >> 8)  & 0xff) / 255,
-            blue:  Double( v        & 0xff) / 255
-        )
     }
 }

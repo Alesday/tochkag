@@ -1,0 +1,181 @@
+// SubscriptionCard.swift
+// Карточка состояния подписки: трафик, срок, название профиля.
+
+import SwiftUI
+
+struct SubscriptionCard: View {
+    let info: SubscriptionInfo
+    var onRefresh: (() -> Void)? = nil
+
+    @State private var spin = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "person.crop.circle")
+                    .font(.system(size: 15))
+                    .foregroundStyle(.secondary)
+                Text(info.title.isEmpty ? "Подписка" : info.title)
+                    .font(.system(size: 15, weight: .semibold))
+                Spacer()
+                statusBadge
+            }
+
+            if info.isUnlimited {
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "infinity")
+                            .font(.system(size: 12))
+                        Text("Безлимитный трафик")
+                            .font(.system(size: 13))
+                        Spacer()
+                    }
+                    .foregroundStyle(.secondary)
+
+                    HStack {
+                        Text("Израсходовано")
+                            .font(.system(size: 12.5))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Text(fmt(info.used))
+                            .font(.system(size: 12.5, weight: .semibold).monospacedDigit())
+                    }
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 5) {
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(Color.secondary.opacity(0.18))
+                            Capsule()
+                                .fill(barColor)
+                                .frame(width: max(4, geo.size.width * info.progress))
+                        }
+                    }
+                    .frame(height: 6)
+
+                    HStack {
+                        Text("\(fmt(info.used)) из \(fmt(info.total))")
+                            .font(.system(size: 12.5))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(Int(info.progress * 100))%")
+                            .font(.system(size: 12.5, weight: .medium).monospacedDigit())
+                            .foregroundStyle(barColor)
+                    }
+                }
+            }
+
+            if let d = info.expireDate {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 12))
+                    Text(expireText(d))
+                        .font(.system(size: 12.5))
+                }
+                .foregroundStyle(info.isExpired ? .red : .secondary)
+            }
+
+            if let onRefresh {
+                Button {
+                    spin.toggle()
+                    onRefresh()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 12, weight: .semibold))
+                            .rotationEffect(.degrees(spin ? 360 : 0))
+                            .animation(.easeInOut(duration: 0.6), value: spin)
+                        Text("Обновить подписку")
+                            .font(.system(size: 13, weight: .medium))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 9)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.secondary.opacity(0.14))
+                    )
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
+            }
+
+            Text("обновлено \(timeText(info.updatedAt))")
+                .font(.system(size: 11).monospacedDigit())
+                .foregroundStyle(.secondary.opacity(0.7))
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.secondary.opacity(0.10))
+        )
+    }
+
+    private var statusBadge: some View {
+        Text(info.isExpired ? "Истекла" : "Активна")
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(info.isExpired ? .red : .green)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(
+                Capsule().fill((info.isExpired ? Color.red : Color.green).opacity(0.15))
+            )
+    }
+
+    private var barColor: Color {
+        switch info.progress {
+        case ..<0.75: return .green
+        case ..<0.92: return .orange
+        default:      return .red
+        }
+    }
+
+    private static let numFormatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.numberStyle = .decimal
+        f.locale = Locale(identifier: "ru_RU")
+        f.minimumFractionDigits = 2
+        f.maximumFractionDigits = 2
+        return f
+    }()
+
+    private func fmt(_ bytes: Int64) -> String {
+        let kb = 1024.0
+        let units: [(String, Double)] = [
+            ("ТБ", kb * kb * kb * kb),
+            ("ГБ", kb * kb * kb),
+            ("МБ", kb * kb),
+            ("КБ", kb)
+        ]
+        let value = Double(bytes)
+        for (name, size) in units where value >= size {
+            let num = Self.numFormatter.string(from: NSNumber(value: value / size)) ?? "0,00"
+            return "\(num) \(name)"
+        }
+        return "\(bytes) Б"
+    }
+
+    private func expireText(_ d: Date) -> String {
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ru_RU")
+        df.dateFormat = "d MMM yyyy"
+        let dateStr = df.string(from: d)
+        if let days = info.daysLeft, days >= 0 {
+            return "до \(dateStr) · осталось \(days) \(dayWord(days))"
+        }
+        return "истекла \(dateStr)"
+    }
+
+    private func timeText(_ d: Date) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm:ss"
+        return f.string(from: d)
+    }
+
+    private func dayWord(_ n: Int) -> String {
+        let n10 = n % 10, n100 = n % 100
+        if n10 == 1 && n100 != 11 { return "день" }
+        if (2...4).contains(n10) && !(12...14).contains(n100) { return "дня" }
+        return "дней"
+    }
+}

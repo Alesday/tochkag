@@ -2,6 +2,7 @@
 // TochkaG
 
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 
 // ── Выбор протокола ───────────────────────────────────────
@@ -12,29 +13,43 @@ struct AddConfigView: View {
 
     var body: some View {
         NavigationView {
-            List {
+            ZStack {
+                AuroraBackground()
+                List {
                 if !store.hasConfig(ofType: .wireguard) {
                     NavigationLink(destination: AddWireGuardView().environmentObject(store)) {
                         Label("WireGuard", systemImage: "network")
+                            .foregroundStyle(Brand.text)
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 } else {
                     HStack {
                         Label("WireGuard", systemImage: "network")
+                            .foregroundStyle(Brand.faint)
                         Spacer()
-                        Text("Уже добавлен").foregroundColor(.secondary).font(.caption)
+                        Text("Уже добавлен").foregroundStyle(Brand.muted).font(.caption)
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 }
 
                 if !store.hasConfig(ofType: .vless) {
                     NavigationLink(destination: AddVlessView().environmentObject(store)) {
                         Label("VLESS", systemImage: "bolt.shield")
+                            .foregroundStyle(Brand.text)
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 } else {
                     HStack {
                         Label("VLESS", systemImage: "bolt.shield")
+                            .foregroundStyle(Brand.faint)
                         Spacer()
-                        Text("Уже добавлен").foregroundColor(.secondary).font(.caption)
+                        Text("Уже добавлен").foregroundStyle(Brand.muted).font(.caption)
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 }
 
                 if store.hasConfig(ofType: .wireguard) || store.hasConfig(ofType: .vless) {
@@ -49,6 +64,9 @@ struct AddConfigView: View {
                         .listRowBackground(Color.clear)
                     }
                 }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Добавить конфиг")
             #if os(iOS)
@@ -57,9 +75,14 @@ struct AddConfigView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Отмена") { dismiss() }
+                        .foregroundStyle(Brand.cyan)
                 }
             }
+            #if os(iOS)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            #endif
         }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -77,6 +100,7 @@ struct AddWireGuardView: View {
     @State private var endpoint       = ""
     @State private var allowedIPs     = "0.0.0.0/0"
     @State private var presharedKey = ""
+    @State private var awgParams: [String: String]? = nil
     @State private var showPaste      = false
     @State private var showFilePicker = false
     @State private var fileLoaded     = false
@@ -94,18 +118,13 @@ struct AddWireGuardView: View {
 
             Section("Загрузить конфиг") {
                 Button("Выбрать .conf файл") { showFilePicker = true }
-                Button("Вставить из буфера обмена") {
-                    if let text = UIPasteboard.general.string, !text.isEmpty {
-                        applyParsed(PasteConfView.parse(text))
-                        if name.isEmpty { name = "WireGuard" }
-                    }
-                }
-                Button("Вставить текст вручную") { showPaste = true }
+                // Импорт только из файла. Буфер обмена и ручной ввод скрыты.
             }
 
             if fileLoaded {
                 Section("Данные конфига") {
                     row("Endpoint", endpoint)
+                    row("Обфускация", (awgParams?["Jc"] != nil) ? "AmneziaWG" : "нет")
                     row("Address", address)
                     row("DNS", dns)
                 }
@@ -158,6 +177,7 @@ struct AddWireGuardView: View {
     }
 
     private func applyParsed(_ parsed: WireGuardConfig) {
+        awgParams = parsed.awgParams
         privateKey = parsed.privateKey
         address    = parsed.address
         dns        = parsed.dns
@@ -188,7 +208,9 @@ struct AddWireGuardView: View {
             dns: dns, publicKey: publicKey, endpoint: endpoint, allowedIPs: allowedIPs,
             presharedKey: presharedKey
         )
-        store.add(.wireguard(cfg))
+        var cfgAWG = cfg
+        cfgAWG.awgParams = awgParams
+        store.add(.wireguard(cfgAWG))
         dismiss()
     }
 }
@@ -208,7 +230,7 @@ struct AddVlessView: View {
     @State private var network    = "ws"
     @State private var security   = "tls"
     @State private var sni        = ""
-    @State private var mode       = 0   // 0=URL, 1=Subscription, 2=Manual
+    @State private var mode       = 1   // только подписка (0=URL, 2=Manual отключены)
     @State private var urlError   = ""
     @State private var isLoading  = false
     @State private var subConfigs: [VlessConfig] = []
@@ -219,16 +241,12 @@ struct AddVlessView: View {
 
     var body: some View {
         Form {
-            Picker("Способ", selection: $mode) {
-                Text("VLESS URL").tag(0)
-                Text("Подписка").tag(1)
-                Text("Вручную").tag(2)
-            }
-            .pickerStyle(.segmented)
-            .listRowBackground(Color.clear)
+            // Добавление только по подписке (mode = 1).
+            // Ветки VLESS URL (mode 0) и Вручную (mode 2) отключены,
+            // код оставлен на случай возврата.
 
             // ── VLESS URL ──────────────────────────────────
-            if mode == 0 {
+            if false, mode == 0 {
                 Section("Вставьте VLESS URL") {
                     TextField("vless://uuid@host:port?...", text: $vlessURL)
                         .textInputAutocapitalization(.never)
@@ -246,7 +264,7 @@ struct AddVlessView: View {
             // ── Подписка ───────────────────────────────────
             if mode == 1 {
                 Section("URL подписки") {
-                    TextField("https://sub.tochkag.online/...", text: $subURL)
+                    TextField("https://...", text: $subURL)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
                     if !urlError.isEmpty {
@@ -258,7 +276,7 @@ struct AddVlessView: View {
                         fetchSubscription()
                     } label: {
                         HStack {
-                            Text("Загрузить конфиги")
+                            Text("Загрузить подписку")
                             Spacer()
                             if isLoading { ProgressView() }
                         }
@@ -266,6 +284,21 @@ struct AddVlessView: View {
                     .disabled(subURL.isEmpty || isLoading)
                 }
                 if !subConfigs.isEmpty {
+                    Section {
+                        Button {
+                            store.addSubscription(subConfigs, url: subURL)
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
+                                Text("Добавить все (\(subConfigs.count))")
+                                    .fontWeight(.semibold)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.orange)
+                    }
                     Section("Найдено: \(subConfigs.count)") {
                         ForEach(subConfigs.indices, id: \.self) { i in
                             HStack {
@@ -276,7 +309,7 @@ struct AddVlessView: View {
                                 }
                                 Spacer()
                                 Button("Добавить") {
-                                    store.add(.vless(subConfigs[i]))
+                                    store.addSubscription([subConfigs[i]], url: subURL)
                                     dismiss()
                                 }
                                 .buttonStyle(.borderedProminent)
@@ -288,7 +321,7 @@ struct AddVlessView: View {
             }
 
             // ── Вручную ────────────────────────────────────
-            if mode == 2 {
+            if false, mode == 2 {
                 Section("Сервер") {
                     TextField("UUID", text: $uuid).textInputAutocapitalization(.never)
                     TextField("Адрес", text: $address).textInputAutocapitalization(.never)
@@ -339,23 +372,136 @@ struct AddVlessView: View {
         urlError   = ""
         subConfigs = []
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        var req = URLRequest(url: url)
+        req.timeoutInterval = 15
+
+        let device     = UIDevice.current
+        let hwid       = device.identifierForVendor?.uuidString.lowercased() ?? "unknown"
+        let osVersion  = device.systemVersion
+        let model      = device.model
+        let appVersion = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+        let locale     = Locale.current.language.languageCode?.identifier ?? "en"
+        // User-Agent в стиле Happ — Remnawave проверяет первое слово
+        let userAgent  = "TochkaG/\(appVersion) (iOS \(osVersion); \(model))"
+
+        req.setValue(hwid,       forHTTPHeaderField: "x-hwid")
+        req.setValue("iOS",      forHTTPHeaderField: "x-device-os")
+        req.setValue(osVersion,  forHTTPHeaderField: "x-ver-os")
+        req.setValue(model,      forHTTPHeaderField: "x-device-model")
+        req.setValue(locale,     forHTTPHeaderField: "x-device-locale")
+        req.setValue(userAgent,  forHTTPHeaderField: "User-Agent")
+
+        #if DEBUG
+        print("[SUB] x-hwid=\(hwid)")
+        #endif
+        print("[SUB] user-agent=\(userAgent)")
+
+        URLSession.shared.dataTask(with: req) { data, response, error in
             DispatchQueue.main.async {
                 isLoading = false
-                if let error = error { urlError = "Ошибка: \(error.localizedDescription)"; return }
+
+                if let error = error {
+                    urlError = "Ошибка: \(error.localizedDescription)"; return
+                }
+
+                if let http = response as? HTTPURLResponse {
+                    print("[SUB] HTTP \(http.statusCode)")
+                    // Стандартные Remnawave-заголовки (с v2.7.5)
+                    let maxReached = http.value(forHTTPHeaderField: "x-hwid-max-devices-reached") == "true"
+                                   || http.value(forHTTPHeaderField: "x-hwid-limit") == "true"
+                    let notSupported = http.value(forHTTPHeaderField: "x-hwid-not-supported") == "true"
+
+                    if maxReached {
+                        urlError = "Превышен лимит устройств на этой подписке. Обратитесь к администратору.\n\nВаш HWID: \(hwid)"
+                        return
+                    }
+                    if notSupported {
+                        urlError = "Сервер требует HWID, но не распознаёт наше приложение. HWID: \(hwid)"
+                        return
+                    }
+                    if http.statusCode == 404 {
+                        urlError = "Подписка не найдена или превышен лимит. HWID: \(hwid)"
+                        return
+                    }
+                    // announce — информационная плашка панели (Remnawave шлёт её всегда),
+                    // не признак ошибки. Логируем и продолжаем парсинг конфигов.
+                    if let announce = http.value(forHTTPHeaderField: "x-hwid-announce")
+                        ?? http.value(forHTTPHeaderField: "announce") {
+                        print("[SUB] announce: \(self.decodePanelMessage(announce))")
+                    }
+                }
+
                 guard let data = data,
                       let raw  = String(data: data, encoding: .utf8) else {
                     urlError = "Не удалось прочитать ответ"; return
                 }
+
+                print("[SUB] raw first 200: \(String(raw.prefix(200)))")
                 let decoded = decodeBase64IfNeeded(raw)
-                let lines   = decoded
+                print("[SUB] decoded first 200: \(String(decoded.prefix(200)))")
+
+                // Делим ТОЛЬКО по переводам строк: в #fragment бывают пробелы
+                // (например "#\u{1F1F3}\u{1F1F1} Netherlands").
+                let tokens = decoded
                     .components(separatedBy: .newlines)
                     .map { $0.trimmingCharacters(in: .whitespaces) }
-                    .filter { $0.hasPrefix("vless://") }
+                    .filter { !$0.isEmpty }
 
-                if lines.isEmpty { urlError = "Конфиги не найдены"; return }
+                var vlessLines = tokens.filter { $0.hasPrefix("vless://") }
 
-                subConfigs = lines.compactMap { line -> VlessConfig? in
+            // Fallback: если базовая стратегия ничего не нашла, пробуем парсить JSON Xray-config
+            if vlessLines.isEmpty {
+                if let extracted = extractVlessFromXrayJSON(raw) {
+                    print("[SUB] JSON parsed, extracted \(extracted.count) vless lines")
+                    vlessLines = extracted
+                }
+            }
+
+                let real = vlessLines.filter { line in
+                    !line.contains("0.0.0.0:1") &&
+                    !line.contains("0.0.0.0:0") &&
+                    !line.contains("127.0.0.1:") &&
+                    !line.contains("@localhost") &&
+                    !line.contains("example.com") &&
+                    !line.contains("00000000-0000-0000-0000-000000000000")
+                }
+
+                if real.isEmpty {
+                    if !vlessLines.isEmpty {
+                        // Извлекаем сообщение сервера из #fragment заглушки
+                        var serverMsg = ""
+                        if let stub = vlessLines.first,
+                           let fragRange = stub.range(of: "#"),
+                           let decoded = String(stub[fragRange.upperBound...])
+                                            .removingPercentEncoding {
+                            serverMsg = decoded.trimmingCharacters(in: .whitespacesAndNewlines)
+                        }
+                        let lower = serverMsg.lowercased()
+
+                        if lower.contains("limit") && lower.contains("device") {
+                            urlError = "Превышен лимит устройств на этой подписке. Обратитесь к администратору.\n\nВаш HWID: \(hwid)"
+                        } else if lower.contains("no hosts") || lower.contains("no servers") {
+                            urlError = "На этой подписке нет активных серверов. Обратитесь к администратору."
+                        } else if lower.contains("expired") || lower.contains("expire") {
+                            urlError = "Срок действия подписки истёк."
+                        } else if lower.contains("disabled") || lower.contains("inactive") {
+                            urlError = "Подписка отключена."
+                        } else if lower.contains("not supported") || lower.contains("not_supported") {
+                            urlError = "Этот VPN-сервис пока не поддерживает наше приложение. Попробуйте другую подписку или добавьте конфиг вручную."
+                        } else if lower.contains("remnawave") || lower.contains("→") || lower.contains("->") {
+                            urlError = "Подписка не активна или у неё нет привязанных серверов."
+                        } else if !serverMsg.isEmpty {
+                            urlError = "Ответ сервера: \(serverMsg)\n\nHWID: \(hwid)"
+                        } else {
+                            urlError = "Не удалось загрузить конфиги. HWID: \(hwid)"
+                        }
+                    } else {
+                        urlError = "В подписке не найдено VLESS-конфигов. Проверьте ссылку или обратитесь в поддержку."
+                    }
+                    return
+                }
+
+                subConfigs = real.compactMap { line -> VlessConfig? in
                     guard let p = parseVlessURL(line) else { return nil }
                     return VlessConfig(
                         name:     p["name"] ?? p["sni"] ?? p["address"] ?? "VLESS",
@@ -372,18 +518,137 @@ struct AddVlessView: View {
                         fingerprint: p["fp"] ?? "chrome"
                     )
                 }
-                if subConfigs.isEmpty { urlError = "Конфиги не найдены в ответе сервера" }
+                if subConfigs.isEmpty {
+                    urlError = "Не удалось распарсить ни один VLESS конфиг"
+                } else {
+                    // Сохраняем URL подписки для авто-обновления при следующем запуске
+                    store.saveSubscriptionURL(subURL)
+                }
             }
         }.resume()
     }
 
-    func decodeBase64IfNeeded(_ s: String) -> String {
-        let t = s.trimmingCharacters(in: .whitespacesAndNewlines)
-        if t.hasPrefix("vless://") { return t }
-        let padded = t + String(repeating: "=", count: (4 - t.count % 4) % 4)
-        if let data = Data(base64Encoded: padded),
-           let decoded = String(data: data, encoding: .utf8) { return decoded }
+
+    /// Извлекает vless:// URI из JSON Xray/sing-box конфига.
+    /// Поддерживает оба формата: массив конфигов и одиночный outbounds.
+    func extractVlessFromXrayJSON(_ raw: String) -> [String]? {
+        guard let data = raw.data(using: .utf8),
+              let parsed = try? JSONSerialization.jsonObject(with: data) else {
+            return nil
+        }
+
+        // Собираем массив outbounds из любого из форматов
+        var outbounds: [[String: Any]] = []
+
+        if let arr = parsed as? [[String: Any]] {
+            // [{ outbounds: [...] }, { outbounds: [...] }]
+            for cfg in arr {
+                if let obs = cfg["outbounds"] as? [[String: Any]] {
+                    outbounds.append(contentsOf: obs)
+                }
+            }
+        } else if let obj = parsed as? [String: Any],
+                  let obs = obj["outbounds"] as? [[String: Any]] {
+            outbounds.append(contentsOf: obs)
+        }
+
+        if outbounds.isEmpty { return nil }
+
+        var result: [String] = []
+        for out in outbounds {
+            // Xray: {"protocol":"vless","settings":{"vnext":[{"address":...,"port":...,"users":[{"id":...,"flow":...}]}]}, "streamSettings":{...}}
+            guard let proto = out["protocol"] as? String, proto == "vless",
+                  let settings = out["settings"] as? [String: Any],
+                  let vnext = settings["vnext"] as? [[String: Any]],
+                  let first = vnext.first,
+                  let address = first["address"] as? String,
+                  let port = first["port"] as? Int,
+                  let users = first["users"] as? [[String: Any]],
+                  let user = users.first,
+                  let uuid = user["id"] as? String else { continue }
+
+            let flow = user["flow"] as? String ?? ""
+            let encryption = user["encryption"] as? String ?? "none"
+
+            // streamSettings → type, security, sni, pbk, sid, fp, path
+            let stream = out["streamSettings"] as? [String: Any] ?? [:]
+            let network = stream["network"] as? String ?? "tcp"
+            let security = stream["security"] as? String ?? "none"
+
+            var params: [String: String] = [
+                "encryption": encryption,
+                "type": network,
+                "security": security
+            ]
+            if !flow.isEmpty { params["flow"] = flow }
+
+            // Reality settings
+            if let reality = stream["realitySettings"] as? [String: Any] {
+                if let sni = reality["serverName"] as? String { params["sni"] = sni }
+                if let pbk = reality["publicKey"] as? String { params["pbk"] = pbk }
+                if let sid = reality["shortId"] as? String { params["sid"] = sid }
+                if let fp = reality["fingerprint"] as? String { params["fp"] = fp }
+            }
+            // TLS settings
+            if let tls = stream["tlsSettings"] as? [String: Any] {
+                if let sni = tls["serverName"] as? String { params["sni"] = sni }
+                if let fp = tls["fingerprint"] as? String { params["fp"] = fp }
+            }
+            // WS settings
+            if let ws = stream["wsSettings"] as? [String: Any] {
+                if let path = ws["path"] as? String { params["path"] = path }
+                if let headers = ws["headers"] as? [String: String], let host = headers["Host"] {
+                    params["host"] = host
+                }
+            }
+
+            let query = params.map { "\($0)=\($1.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? $1)" }
+                              .joined(separator: "&")
+            let tag = (out["tag"] as? String) ?? "VLESS"
+            let fragment = tag.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? tag
+
+            let url = "vless://\(uuid)@\(address):\(port)?\(query)#\(fragment)"
+            result.append(url)
+        }
+        return result.isEmpty ? nil : result
+    }
+
+    /// Панель отдаёт часть заголовков как "base64:...." — раскрываем в читаемый текст.
+    func decodePanelMessage(_ raw: String) -> String {
+        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard t.hasPrefix("base64:") else { return t }
+        let body = String(t.dropFirst("base64:".count))
+        let padded = body + String(repeating: "=", count: (4 - body.count % 4) % 4)
+        if let d = Data(base64Encoded: padded),
+           let s = String(data: d, encoding: .utf8) {
+            return s.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
         return t
+    }
+
+    func decodeBase64IfNeeded(_ s: String) -> String {
+        let trimmed = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.hasPrefix("vless://") || trimmed.hasPrefix("vmess://") ||
+           trimmed.hasPrefix("trojan://") || trimmed.hasPrefix("ss://") {
+            return trimmed
+        }
+        let cleaned = trimmed.filter { !$0.isWhitespace }
+        let padded = cleaned + String(repeating: "=", count: (4 - cleaned.count % 4) % 4)
+        if let data = Data(base64Encoded: padded),
+           let decoded = String(data: data, encoding: .utf8),
+           decoded.contains("://") {
+            return decoded
+        }
+        let urlSafe = cleaned
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        let urlSafePadded = urlSafe + String(repeating: "=", count: (4 - urlSafe.count % 4) % 4)
+        if let data = Data(base64Encoded: urlSafePadded),
+           let decoded = String(data: data, encoding: .utf8),
+           decoded.contains("://") {
+            return decoded
+        }
+        return trimmed
     }
 
     func parseVlessURL(_ raw: String) -> [String: String]? {
@@ -470,6 +735,23 @@ struct PasteConfView: View {
     }
 
     static func parse(_ t: String) -> WireGuardConfig {
+        var cfg = parseBase(t)
+        var extra = cfg.awgParams ?? [:]
+        for line in t.components(separatedBy: .newlines) {
+            let parts = line.split(separator: "=", maxSplits: 1)
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+            guard parts.count == 2, !parts[1].isEmpty else { continue }
+            switch parts[0].lowercased() {
+            case "mtu":                 extra["MTU"] = parts[1]
+            case "persistentkeepalive": extra["PersistentKeepalive"] = parts[1]
+            default: break
+            }
+        }
+        if !extra.isEmpty { cfg.awgParams = extra }
+        return cfg
+    }
+
+    static func parseBase(_ t: String) -> WireGuardConfig {
         func get(_ key: String) -> String {
             let pattern = "\(key)\\s*=\\s*(.+)"
             guard let r = t.range(of: pattern, options: .regularExpression) else { return "" }
@@ -477,12 +759,26 @@ struct PasteConfView: View {
                 .components(separatedBy: "=").dropFirst().joined(separator: "=")
                 .trimmingCharacters(in: .whitespaces)
         }
-        return WireGuardConfig(
+        var c = WireGuardConfig(
             name: "WireGuard",
             privateKey: get("PrivateKey"), address: get("Address"), dns: get("DNS"),
             publicKey: get("PublicKey"), endpoint: get("Endpoint"), allowedIPs: get("AllowedIPs"),
             presharedKey: get("PresharedKey")
         )
+        // AmneziaWG: читаем построчно и строго по имени ключа,
+        // чтобы не зацепить совпадения внутри base64-ключей.
+        let awgKeys: Set<String> = ["Jc","Jmin","Jmax","S1","S2","S3","S4",
+                                    "H1","H2","H3","H4","I1","I2","I3","I4","I5",
+                                    "J1","J2","J3","Itime"]
+        var awg: [String: String] = [:]
+        for line in t.components(separatedBy: .newlines) {
+            let parts = line.split(separator: "=", maxSplits: 1)
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+            guard parts.count == 2, awgKeys.contains(parts[0]), !parts[1].isEmpty else { continue }
+            awg[parts[0]] = parts[1]
+        }
+        c.awgParams = awg.isEmpty ? nil : awg
+        return c
     }
 }
 

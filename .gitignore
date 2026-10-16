@@ -23,3 +23,14 @@ xcuserdata/
 *.cer
 *.key
 tochkaG/Libbox.xcframework/
+
+# Go-сборка WireGuard под macOS (267 МБ goroot + артефакты)
+WireGuardKitGoMac/.tmp/
+WireGuardKitGoMac/out/
+
+# локальные бэкапы патчей
+*.pre_awg
+*.before_*
+*.bak
+*.bak.*
+*.bak_*
